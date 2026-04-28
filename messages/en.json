@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "title": "Business Automation & AI Solutions — TAIGA ULTIMATE",
+    "description": "I automate routine tasks and build ready-to-use business systems. AI bots, integrations, websites, CRM — from request to finished solution."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "process": "Process",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "hero": {
+    "headline": "I automate routine tasks and build working systems for business",
+    "subheadline": "From requests and messages to a complete digital system. AI automation, bots, integrations, websites — all in one place.",
+    "cta": "Submit Request",
+    "ctaSecondary": "Learn More"
+  },
+  "tasks": {
+    "title": "What tasks do people come to me with",
+    "subtitle": "Common situations for businesses:",
+    "items": [
+      { "icon": "inbox", "text": "Requests get lost in chats and spreadsheets" },
+      { "icon": "repeat", "text": "Managers do the same manual work every day" },
+      { "icon": "clock", "text": "Responding to clients takes too much time" },
+      { "icon": "users", "text": "Processes depend on specific people" },
+      { "icon": "plug", "text": "Services are not connected to each other" },
+      { "icon": "trending-up", "text": "Business is growing, but there's chaos inside" }
+    ]
+  },
+  "services": {
+    "title": "What I do",
+    "subtitle": "I solve clear business tasks: from routine automation to full-scale digital systems.",
+    "items": [
+      {
+        "title": "AI Business Automation",
+        "description": "Automation of repetitive processes, request handling, routing, automatic responses."
+      },
+      {
+        "title": "AI Bots & Assistants",
+        "description": "Telegram bots for client communication, team assistants, internal helpers."
+      },
+      {
+        "title": "Service Integration",
+        "description": "I combine CRM, Telegram, forms, spreadsheets and APIs into one working system."
+      },
+      {
+        "title": "Websites & Web Products",
+        "description": "Landing pages, corporate websites, personal dashboards, business process interfaces."
+      },
+      {
+        "title": "Custom System Development",
+        "description": "I analyze the task and propose the optimal solution — even if you don't know exactly what you need."
+      }
+    ]
+  },
+  "ai": {
+    "title": "How AI and LLM help businesses — in simple terms",
+    "intro": "AI is not magic and not a replacement for people. It's a tool that removes routine: automates repetitive actions, helps process requests and client communication.",
+    "cases": [
+      "Respond to routine client messages 24/7",
+      "Process and sort requests",
+      "Help managers with responses",
+      "Automate internal instructions and knowledge base",
+      "Speed up sales and support teams",
+      "Save time on repetitive text tasks",
+      "Classify inquiries and route them to the right people",
+      "Prepare product descriptions and cards"
+    ],
+    "cta": "Find out how AI can help your business"
+  },
+  "benefits": {
+    "title": "What this gives your business",
+    "items": [
+      { "value": "−60%", "label": "less manual work" },
+      { "value": "×2", "label": "faster request processing" },
+      { "value": "0", "label": "lost clients" },
+      { "value": "100%", "label": "order in processes" },
+      { "value": "24/7", "label": "automatic responses" },
+      { "value": "×3", "label": "faster scaling" }
+    ]
+  },
+  "whyMe": {
+    "title": "Why work with me",
+    "items": [
+      { "title": "System approach", "description": "Not just code, but a business task solution. I look at processes holistically." },
+      { "title": "Not templates, but solution for your task", "description": "Every project is individual. I do what you specifically need." },
+      { "title": "Fullstack + AI expertise", "description": "I can build everything: interface, logic, backend, database, integrations, AI." },
+      { "title": "I take the task entirely", "description": "No need to understand technologies. Describe the problem — get a system." },
+      { "title": "Focus on result", "description": "Demo features look nice. Working result — that's what matters." },
+      { "title": "I think like a business", "description": "I understand what's important for business: speed, reliability, simplicity." }
+    ]
+  },
+  "process": {
+    "title": "How the work goes",
+    "subtitle": "Simple and clear process from request to result.",
+    "steps": [
+      { "step": "01", "title": "You submit a request", "description": "Describe your task or problem — in free form" },
+      { "step": "02", "title": "I analyze the task", "description": "I review your processes, find points for automation" },
+      { "step": "03", "title": "I propose a solution", "description": "I show what needs to be done and how it solves your problem" },
+      { "step": "04", "title": "I build the system", "description": "I deliver everything turnkey: from interface to integrations" },
+      { "step": "05", "title": "I deliver the working result", "description": "You test, approve, launch. Support after delivery." }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "Do I need to understand AI?",
+        "answer": "No. I'll explain everything in plain language. Your task is to describe the problem you need solved."
+      },
+      {
+        "question": "Is this suitable for my business?",
+        "answer": "Automation is useful for any business with repetitive processes: requests, client communication, data processing. If you have routine work — there's something to automate."
+      },
+      {
+        "question": "What if I don't know exactly what system I need?",
+        "answer": "That's normal. Many come with a problem, not a solution. I'll figure it out and propose the optimal option."
+      },
+      {
+        "question": "What access will be needed?",
+        "answer": "Depends on the task. Usually: access to services that need to be integrated. We discuss this during the task analysis."
+      },
+      {
+        "question": "How long does it take?",
+        "answer": "Simple tasks — from 1-2 weeks. Complex systems — from 1-2 months. Exact timing is given after the task analysis."
+      },
+      {
+        "question": "Can we start small?",
+        "answer": "Yes. You can start with one bot or one integration and then expand. I scale as your needs grow."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to automate routine?",
+    "subtitle": "Describe your task — let's figure it out together.",
+    "form": {
+      "name": "Your name",
+      "contact": "Telegram, email or phone",
+      "message": "Tell us what you need help with",
+      "submit": "Submit Request",
+      "success": "Request sent! I'll contact you within 1-2 days.",
+      "error": "Something went wrong. Please try again."
+    },
+    "or": "or write directly:",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp"
+  },
+  "footer": {
+    "copyright": "All rights reserved.",
+    "tagline": "Business Automation & AI Solutions."
+  }
+}
