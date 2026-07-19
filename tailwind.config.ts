@@ -48,6 +48,17 @@ const config: Config = {
           hover: 'var(--mint-hover)',
           foreground: 'var(--mint-foreground)',
         },
+        cta: {
+          DEFAULT: 'var(--cta)',
+          foreground: 'var(--cta-foreground)',
+        },
+        chart: {
+          '1': 'var(--chart-1)',
+          '2': 'var(--chart-2)',
+          '3': 'var(--chart-3)',
+          '4': 'var(--chart-4)',
+          '5': 'var(--chart-5)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -55,7 +66,7 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
       },
       spacing: {
@@ -72,6 +83,13 @@ const config: Config = {
         'lg': '1024px',
         'xl': '1280px',
         '2xl': '1536px',
+      },
+      boxShadow: {
+        'sm': 'var(--shadow-sm)',
+        'md': 'var(--shadow-md)',
+        'lg': 'var(--shadow-lg)',
+        'xl': 'var(--shadow-xl)',
+        'card': 'var(--shadow-card)',
       },
     },
   },

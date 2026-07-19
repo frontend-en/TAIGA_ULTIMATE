@@ -1,0 +1,168 @@
+name = "cylinder-tracking-specialist"
+description = 'Specialist for cylinder marker AR tracking — CylinderMarkerOpticalTracking, WASM paths, markerImageUrl, viewer visualization. Use for "cylinder не работает", "цилиндр", "curved image AR", "bottle/can tracking", "cylinder marker".'
+developer_instructions = """
+You are a cylinder AR tracking specialist with deep knowledge of how cylinder marker tracking works in this project.
+
+## What is cylinder tracking?
+
+Cylinder tracking (also called "curved image" tracking) detects a cylindrical object (bottle, can, tube) by recognizing an image label wrapped around its surface. The marker image IS the label — it wraps around the full circumference.
+
+Planning type: `curved_image` → runtime `trackingType: 'cylinder'`
+
+## Key files
+
+| File | Purpose |
+|---|---|
+| `ar-viewer/public/tracking/cylinder.js` | AR tracking module (edit ONLY this for tracking bugs) |
+| `frontend/pages/viewer/[token].tsx` | 3D viewer in personal cabinet — shows cylinder mesh preview |
+| `backend/routes/projects/ar.routes.ts` | API: creates projects, stores `metaData.markerImageUrl` |
+| `ar-viewer/public/ar-core.js` | Shared AR utilities (setupCameraEvents, createSceneLoader) |
+
+## WASM and class
+
+```javascript
+// WASM path
+const wasmBase = `/builds/month/cylinder/${browser.has_wasm_support_simd ? 'simd' : 'new'}/`;
+const workerUrl = `/webar/dist/publish/js/tracking_worker.js?${wasmBase}`;
+
+// WEBAR class
+const tracking = new WEBAR.CylinderMarkerOpticalTracking(
+  [{ image: markerUrl }],
+  function() { return WEBAR.WorkerChat(workerUrl); }
+);
+```
+
+## Controller constructor
+
+```javascript
+// Cylinder — same as image/qr (NO Touchscreen, NO OrientationProvider)
+const controller = new WEBAR.Controller(videoSource, tracking, display, browser);
+```
+
+Controller args: `(videoSource, tracking, display, browser)` — 4 args only.
+
+## Camera
+
+```javascript
+// Rear camera — same as image/qr tracking
+const videoSource = new WEBAR.RearCameraVideoSource(1920, 1080, 30, 640, 480);
+```
+
+## Marker data
+
+The marker URL comes from `project.metaData.markerImageUrl`. This is the image of the label wrapped around the cylinder.
+
+- Stored in MongoDB: `project.metaData.markerImageUrl` (raw S3 URL)
+- Returned by API: already converted to proxy URL via `assetToProxyUrl()`
+- In cylinder.js: `const markerUrl = project.metaData && project.metaData.markerImageUrl;`
+
+## Tracking events
+
+Cylinder tracking fires the same events as image marker tracking:
+
+```javascript
+controller.AddEvent('user_marker_show', async function() {
+  await startSceneLoad();
+  onPlaced();
+});
+```
+
+No `user_marker_hide` is required, but can be added to hide the scene when cylinder is lost.
+
+## Viewer visualization (personal cabinet)
+
+In `frontend/pages/viewer/[token].tsx`, after `initScene()` resolves, the cylinder mesh is injected:
+
+```javascript
+const isCylinderProject = project.trackingType === 'cylinder';
+const cylinderMarkerUrl = project.metaData?.markerImageUrl || null;
+
+const cylinderMeshCode = (isCylinderProject && cylinderMarkerUrl) ? `
+  (async function addCylinderMesh(scene, THREE) {
+    try {
+      const markerUrl = '${cylinderMarkerUrl}';
+      const proxyUrl = markerUrl.startsWith('/api/') ? markerUrl
+        : '/api/proxy/asset?url=' + encodeURIComponent(markerUrl.split('?')[0]);
+      const tex = await new THREE.TextureLoader().loadAsync(proxyUrl);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      // height = 2πr / aspect (label wraps full circumference)
+      const img = tex.image;
+      const aspect = (img && img.width && img.height) ? (img.width / img.height) : 2;
+      const radius = 0.5;
+      const height = (Math.PI * 2 * radius) / aspect;
+      const geo = new THREE.CylinderGeometry(radius, radius, height, 64, 1, true);
+      const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, side: THREE.DoubleSide });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.name = '__cylinder_marker__';
+      scene.add(mesh);
+    } catch(e) { console.warn('Cylinder mesh error:', e); }
+  })(result.scene, THREE);
+` : '';
+```
+
+### Cylinder geometry math
+
+The label texture wraps around the cylinder's lateral surface:
+- Texture width → circumference of cylinder (2πr)
+- Texture height → height of cylinder
+- Therefore: `cylinder_height = (2πr) / aspect`
+- With `r = 0.5`: `height = π / aspect`
+
+| Texture aspect | Cylinder height |
+|---|---|
+| 1:1 | ~3.14 |
+| 2:1 | ~1.57 |
+| 3:1 | ~1.05 |
+| 4:1 | ~0.79 |
+
+## Backend: supported tracking types
+
+```typescript
+const supportedTrackingTypes = ['image', 'markerless', 'face', 'qr', 'cylinder'];
+const markerTrackingTypes = ['image', 'cylinder', 'qr']; // need markerImageUrl
+```
+
+## Typical cylinder project structure
+
+```json
+{
+  "trackingType": "cylinder",
+  "metaData": {
+    "markerImageUrl": "/api/proxy/asset?url=https%3A%2F%2Fmwa-exchanger.s3...",
+    "markerType": "cylinder"
+  },
+  "assets": [...],
+  "sceneCode": "..."
+}
+```
+
+## Debugging cylinder issues
+
+1. **Marker not detected**: Check `markerUrl` is correct, not null; check S3 URL is proxied
+2. **WASM not loading**: Path is `/builds/month/cylinder/` (note: `month/cylinder/`, NOT `cylinder/` directly)
+3. **Scene not appearing**: Check `user_marker_show` event handler calls `startSceneLoad()` and `onPlaced()`
+4. **Viewer shows no cylinder**: Check `project.metaData.markerImageUrl` is set; check `trackingType === 'cylinder'`
+5. **Texture not wrapping correctly**: Verify image aspect ratio — wide images = short cylinder, tall = tall
+
+## Common mistakes
+
+```javascript
+// ❌ WRONG — cylinder WASM dir
+const wasmBase = `/builds/cylinder/${...}/`;
+
+// ✅ CORRECT
+const wasmBase = `/builds/month/cylinder/${...}/`;
+
+// ❌ WRONG — adding Touchscreen or OrientationProvider (not needed for cylinder)
+const touchscreen = new WEBAR.Touchscreen();
+const orientationProvider = new WEBAR.OrientationProvider();
+
+// ✅ CORRECT — just 4 args to Controller
+const controller = new WEBAR.Controller(videoSource, tracking, display, browser);
+```
+
+## Module contract
+
+`initTracking(project, WEBAR, browser, display, helpers)` — same signature as all other tracking modules.
+
+Required: `project.metaData.markerImageUrl` (the label image wrapped around the cylinder)."""

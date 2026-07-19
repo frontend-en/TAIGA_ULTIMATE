@@ -33,6 +33,24 @@
     /* CTA accent (warm orange) */
     --cta: 25 95% 53%;
     --cta-foreground: 210 40% 98%;
+
+    /* Chart colors */
+    --chart-1: 160 84% 39%;
+    --chart-2: 220 70% 50%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+    /* Glow effects */
+    --glow-mint: 0 0 20px -5px rgb(16 185 129 / 0.4);
+    --glow-cta: 0 0 20px -5px rgb(249 115 22 / 0.4);
   }
 
   .dark {
@@ -60,6 +78,19 @@
     --mint: 160 76% 50%;
     --mint-hover: 160 76% 55%;
     --mint-foreground: 222 47% 4%;
+
+    /* Chart dark */
+    --chart-1: 160 84% 45%;
+    --chart-2: 220 70% 50%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Shadows dark */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.2);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
   }
 }
 
@@ -86,3 +117,25 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Accordion animations */
+@keyframes collapse-down {
+  from { height: 0; opacity: 0; }
+  to { height: var(--radix-accordion-content-height); opacity: 1; }
+}
+@keyframes collapse-up {
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to { height: 0; opacity: 0; }
+}
+.animate-collapse-down { animation: collapse-down 0.2s ease-out; }
+.animate-collapse-up { animation: collapse-up 0.2s ease-in; }
+
+/* Gradient pulse */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+.delay-1000 { animation-delay: 1s; }

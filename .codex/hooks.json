@@ -1,0 +1,99 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \"No description\")\"' >> ~/.claude/bash-command-log.txt"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(echo $STDIN_JSON | jq -r '.tool_input.file_path // \"\"'); CONTENT=$(echo $STDIN_JSON | jq -r '.tool_input.content // \"\"'); case \"$FILE\" in *.js|*.jsx|*.ts|*.tsx) if echo \"$CONTENT\" | grep -q 'console\\.log'; then echo 'Warning: console.log statements should be removed before committing' >&2; exit 2; fi ;; esac"
+          }
+        ]
+      },
+      {
+        "matcher": "Grep|Glob|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node 'G:\\ActiveMoney\\TAIGA_ULTIMATE\\.codex\\hooks\\gitnexus/gitnexus-hook.cjs'",
+            "timeout": 10,
+            "statusMessage": "Enriching with GitNexus graph context..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(echo $STDIN_JSON | jq -r '.tool_input.file_path // \"\"'); case \"$FILE\" in *.js|*.jsx|*.ts|*.tsx) npx prettier --write \"$FILE\" 2>/dev/null || true ;; esac",
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(echo $STDIN_JSON | jq -r '.tool_input.file_path // \"\"'); case \"$FILE\" in *.js|*.jsx|*.ts|*.tsx) if grep -q 'import \\* from' \"$FILE\" 2>/dev/null; then echo 'Warning: Avoid wildcard imports for better tree-shaking' >&2; exit 2; fi ;; esac"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node 'G:\\ActiveMoney\\TAIGA_ULTIMATE\\.codex\\hooks\\gitnexus/gitnexus-hook.cjs'",
+            "timeout": 10,
+            "statusMessage": "Checking GitNexus index freshness..."
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMCHROMA=${CLAUDE_MEM_CHROMA_PORT:-30002}; CMDIR=${CLAUDE_MEM_DATA_DIR:-$HOME/.claude-mem}; mkdir -p \"$CMDIR/chroma\"; curl -sf --noproxy '127.0.0.1,localhost' \"http://127.0.0.1:$CMCHROMA/api/v2/auth/identity\" >/dev/null 2>&1 || nohup $HOME/.chroma-venv/bin/chroma run --host 127.0.0.1 --port $CMCHROMA --path \"$CMDIR/chroma\" > \"$CMDIR/chroma.log\" 2>&1 &",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bd prime"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bd prime"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,18 +1,13 @@
 import type { Metadata } from 'next';
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { getMessages } from 'next-intl/server';
 import '@/app/globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  variable: '--font-display',
+const roboto = Roboto({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-sans',
+  weight: ['400', '500', '700'],
   display: 'swap',
 });
 
@@ -153,7 +148,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${plusJakarta.variable} font-sans antialiased`}>
+      <body className={`${roboto.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem locale={locale} messages={messages}>
           {children}
         </ThemeProvider>

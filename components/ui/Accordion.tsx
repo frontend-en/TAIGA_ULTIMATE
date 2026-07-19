@@ -21,28 +21,30 @@ export function Accordion({ items }: AccordionProps) {
         <Card
           key={index}
           className={cn(
-            'cursor-pointer transition-colors hover:bg-accent/50',
-            openIndex === index && 'bg-accent/30'
+            'cursor-pointer transition-all duration-200 hover:border-primary/30 hover:shadow-md',
+            openIndex === index && 'border-primary/30 bg-primary/5'
           )}
           onClick={() => setOpenIndex(openIndex === index ? null : index)}
         >
-          <CardHeader className="flex-row items-center justify-between p-4 cursor-pointer">
-            <CardTitle className="text-lg font-medium">{item.question}</CardTitle>
+          <CardHeader className="flex-row items-center justify-between p-4 cursor-pointer group">
+            <CardTitle className="text-lg font-medium pr-4">{item.question}</CardTitle>
             <ChevronDown
               className={cn(
-                'h-5 w-5 text-muted-foreground transition-transform duration-200',
-                openIndex === index && 'rotate-180'
+                'h-5 w-5 text-muted-foreground transition-all duration-200 group-hover:text-primary',
+                openIndex === index && 'rotate-180 text-primary'
               )}
             />
           </CardHeader>
-          <CardContent
+          <div
             className={cn(
-              'overflow-hidden transition-all duration-300',
+              'overflow-hidden transition-all duration-300 ease-out',
               openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
             )}
           >
-            <p className="text-muted-foreground leading-relaxed">{item.answer}</p>
-          </CardContent>
+            <CardContent className="pb-4">
+              <p className="text-muted-foreground leading-relaxed">{item.answer}</p>
+            </CardContent>
+          </div>
         </Card>
       ))}
     </div>

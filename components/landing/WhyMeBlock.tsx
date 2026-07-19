@@ -36,7 +36,7 @@ export function WhyMeBlock({ locale }: WhyMeBlockProps) {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
             >
-              <Card className="h-full">
+              <Card variant="mint" className="h-full">
                 <CardContent className="p-6">
                   <CheckCircle2 className="w-6 h-6 text-primary mb-4" />
                   <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
