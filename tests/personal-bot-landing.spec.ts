@@ -25,6 +25,15 @@ test.describe('personal bot landing', () => {
     await expect(page.getByRole('heading', { name: 'Tell us what your bot should be like' })).toBeVisible();
   });
 
+  test('only names MAX and VK as selectable platforms', async ({ page }) => {
+    await page.goto('/ru#lead-form');
+
+    const options = page.getByLabel('Мессенджер').locator('option');
+    await expect(options).toHaveText(['MAX', 'VK', 'Другой мессенджер']);
+    await expect(options).toHaveCount(3);
+    await expect(page.locator('body')).not.toContainText('lead.fields.');
+  });
+
   test('submits a qualified lead and announces success', async ({ page }) => {
     await page.route('**/api/leads', async (route) => {
       const request = route.request();
@@ -33,7 +42,7 @@ test.describe('personal bot landing', () => {
       expect(payload).toMatchObject({
         name: 'Анна',
         contact: '@anna',
-        messenger: 'telegram',
+        messenger: 'max',
         consent: true,
       });
       expect(payload.botPurpose).toContain('помогал с текстами');
@@ -43,7 +52,7 @@ test.describe('personal bot landing', () => {
     await page.goto('/ru#lead-form');
     await page.getByLabel('Ваше имя').fill('Анна');
     await page.getByLabel('Как с вами связаться').fill('@anna');
-    await page.getByLabel('Мессенджер').selectOption('telegram');
+    await page.getByLabel('Мессенджер').selectOption('max');
     await page.getByLabel('Каким должен быть ваш бот').fill('Хочу, чтобы бот помогал с текстами и идеями каждый день.');
     await page.getByLabel(/Соглашаюсь/).check();
     await page.getByRole('button', { name: 'Отправить заявку' }).click();
@@ -63,7 +72,7 @@ test.describe('personal bot landing', () => {
     await page.goto('/ru#lead-form');
     await page.getByLabel('Ваше имя').fill('Анна');
     await page.getByLabel('Как с вами связаться').fill('@anna');
-    await page.getByLabel('Мессенджер').selectOption('telegram');
+    await page.getByLabel('Мессенджер').selectOption('max');
     await page.getByLabel('Каким должен быть ваш бот').fill('Хочу персонального помощника для ежедневных вопросов.');
     await page.getByLabel(/Соглашаюсь/).check();
     await page.getByRole('button', { name: 'Отправить заявку' }).click();

@@ -77,7 +77,7 @@
       },
       {
         "title": "Service Integration",
-        "description": "I combine CRM, Telegram, forms, spreadsheets and APIs into one working system."
+        "description": "I combine CRM, MAX, VK, forms, spreadsheets and APIs into one working system."
       },
       {
         "title": "Websites & Web Products",
@@ -105,7 +105,7 @@
     "items": [
       {
         "question": "Which messenger can the bot use?",
-        "answer": "We can connect the assistant to Telegram, WhatsApp, VK, or another messenger that provides a technical integration option. We confirm feasibility and timing after your request."
+        "answer": "We can connect the assistant to MAX or VK. We can consider another platform if it provides a technical integration option. We confirm the platform and timing after your request."
       },
       {
         "question": "What can the basic bot do?",
@@ -139,7 +139,7 @@
       "name": { "label": "Your name", "placeholder": "How should we address you?" },
       "contact": { "label": "How can we reach you?", "placeholder": "Email, phone, or @username" },
       "messenger": { "label": "Messenger", "other": "Another messenger" },
-      "purpose": { "label": "What should your bot be like?", "placeholder": "For example: help with writing, respond calmly and concisely, and live in Telegram…" }
+      "purpose": { "label": "What should your bot be like?", "placeholder": "For example: help with writing, respond calmly and concisely, and live in MAX…" }
     },
     "consent": { "prefix": "I agree to the", "link": "personal data processing policy" },
     "submit": "Send request",
@@ -174,9 +174,9 @@
   "pages": {
     "pricing": {
       "metaTitle": "Top up the Internal Balance",
-      "metaDescription": "Terms for topping up the internal balance to access Telegram bot AI features.",
+      "metaDescription": "Terms for topping up the internal balance to access the connected bot's AI features.",
       "title": "Top up the Internal Balance",
-      "description": "The internal balance is used solely to pay for access to Telegram bot AI features.",
+      "description": "The internal balance is used solely to pay for access to the connected bot's AI features.",
       "balanceTitle": "Crediting terms",
       "balanceDescription": "The User independently selects a top-up amount. The minimum amount is RUB 200.",
       "facts": {
@@ -190,7 +190,7 @@
     },
     "howItWorks": {
       "metaTitle": "How Top-Ups Work",
-      "metaDescription": "The procedure for topping up the internal balance and accessing Telegram bot AI features.",
+      "metaDescription": "The procedure for topping up the internal balance and accessing the connected bot's AI features.",
       "title": "How It Works",
       "description": "The sequence from choosing a top-up amount to accessing AI features.",
       "steps": {
@@ -198,7 +198,7 @@
         "payment": { "title": "Pay through YooKassa", "description": "After online payments are connected, a secure YooKassa payment form opens." },
         "confirmation": { "title": "Wait for confirmation", "description": "The payment service confirms the payment." },
         "credit": { "title": "Receive the credit", "description": "After confirmation, the amount is automatically credited to the internal balance." },
-        "access": { "title": "Use AI features", "description": "The internal balance is spent when paid Telegram bot AI features are used." }
+        "access": { "title": "Use AI features", "description": "The internal balance is spent when the connected bot's paid AI features are used." }
       },
       "notice": "This flow applies after online payments are connected. Visiting a page after payment is not payment confirmation: the balance is credited only after a successful payment is confirmed."
     }

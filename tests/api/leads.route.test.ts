@@ -5,7 +5,7 @@ import { createLeadPostHandler } from '../../lib/leads/handler';
 const validLead = {
   name: 'Анна',
   contact: '@anna',
-  messenger: 'telegram',
+  messenger: 'max',
   botPurpose: 'Автоматизировать ответы клиентам в мессенджере.',
   consent: true,
 };
@@ -90,12 +90,22 @@ describe('POST /api/leads', () => {
     );
   });
 
+  it.each(['vk', 'other'] as const)('accepts the supported %s messenger value', async (messenger) => {
+    const sendMail = vi.fn().mockResolvedValue(undefined);
+    const post = createLeadPostHandler({ createTransport: () => ({ sendMail }) });
+
+    const response = await post(leadRequest({ ...validLead, messenger }));
+
+    expect(response.status).toBe(200);
+    expect(sendMail).toHaveBeenCalledOnce();
+  });
+
   it.each([
     ['a too-short name', { ...validLead, name: 'А' }],
     ['a too-long name', { ...validLead, name: 'А'.repeat(81) }],
     ['a too-short contact', { ...validLead, contact: 'ab' }],
     ['a too-long contact', { ...validLead, contact: 'a'.repeat(121) }],
-    ['an unsupported messenger', { ...validLead, messenger: 'signal' }],
+    ['an unsupported named messenger', { ...validLead, messenger: 'unsupported-platform' }],
     ['a too-short purpose', { ...validLead, botPurpose: 'a'.repeat(9) }],
     ['a too-long purpose', { ...validLead, botPurpose: 'a'.repeat(1001) }],
     ['a whitespace-only name', { ...validLead, name: '  ' }],

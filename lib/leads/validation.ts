@@ -3,7 +3,7 @@ import { z } from 'zod';
 const leadSchema = z.object({
   name: z.string().trim().min(2).max(80),
   contact: z.string().trim().min(3).max(120),
-  messenger: z.enum(['telegram', 'whatsapp', 'vk', 'other']),
+  messenger: z.enum(['max', 'vk', 'other']),
   botPurpose: z.string().trim().min(10).max(1000),
   consent: z.literal(true),
   website: z.literal('').optional(),

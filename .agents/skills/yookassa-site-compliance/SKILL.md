@@ -13,7 +13,7 @@ Before publishing or inventing legal text, collect and confirm:
 
 - production domain;
 - seller's full legal name, INN, OGRNIP/OGRN when applicable, and requisites address;
-- working support email and phone; Telegram only when operational;
+- working support email and phone; messenger contact only when operational;
 - product description, package names, credit quantities, fixed RUB prices, and delivery moment;
 - approved offer wording, refund policy, privacy-processing details, and offer effective date;
 - applicable receipt configuration: item description, VAT code, payment mode, and payment subject.
@@ -86,7 +86,7 @@ Use a shared `LegalPage` or equivalent presentational template when it reduces d
 
 Add Header and Footer links for pricing, offer, refunds, privacy, requisites, and contacts. Make every footer legal link available without authentication. Update all CTA paths to pricing or a real configured contact channel.
 
-Remove a nonfunctional lead form unless a real validated submission endpoint exists. Never display success before the service responds successfully. Remove test phone/WhatsApp links and unverified social profiles.
+Remove a nonfunctional lead form unless a real validated submission endpoint exists. Never display success before the service responds successfully. Remove test phone, messenger links, and unverified social profiles.
 
 Implement per-route metadata with `generateMetadata` or a reusable server helper. Emit canonical URLs, Open Graph URLs, JSON-LD URLs, `robots`, and `sitemap` entries only from a confirmed `https` production origin; do not guess a domain. Include RU/EN alternates when both production URLs are known.
 
