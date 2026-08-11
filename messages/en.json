@@ -121,7 +121,7 @@
       },
       {
         "question": "How are AI requests paid for after launch?",
-        "answer": "The bot uses funds from your internal balance as AI features are used. The minimum top-up is RUB 200 and does not pay for development or setup."
+        "answer": "A package of 100 internal credits costs RUB 600 and is spent as AI features are used. The package does not pay for bot development or its initial connection."
       },
       {
         "question": "How is my data handled?",
@@ -180,7 +180,7 @@
       "packagesLabel": "Available packages",
       "packageTitle": "{credits} internal credits",
       "packagePrice": "RUB {price}",
-      "balanceDescription": "This fixed package is used only for AI features of an already connected bot.",
+      "balanceDescription": "This fixed package can be used only with an already connected bot.",
       "facts": {
         "rate": "RUB {rate} per internal credit",
         "confirmation": "Credits are added only after server-side confirmation of a successful YooKassa payment.",
@@ -188,19 +188,19 @@
         "refund": "A refund is possible only for unused internal credits when the Service is unavailable for reasons attributable to the Provider; it is calculated at RUB {rate} per unused internal credit and cannot exceed the original payment."
       },
       "paymentTitle": "Online checkout is not available yet",
-      "paymentDescription": "Online checkout is not yet available. Contact support to arrange payment. Returning to a page after payment alone is not proof of payment; credits are added only after server-side confirmation of a successful YooKassa payment.",
+      "paymentDescription": "Online checkout is not yet available. Contact support to arrange payment. Returning to a page after payment alone is not proof of payment; credits are added when YooKassa reports a successful payment to the Service.",
       "contactCta": "Contact support"
     },
     "howItWorks": {
-      "metaTitle": "How Top-Ups Work",
-      "metaDescription": "The procedure for topping up the internal balance and accessing the connected bot's AI features.",
+      "metaTitle": "How the Internal Credit Package Works",
+      "metaDescription": "The procedure for purchasing the fixed internal credit package and accessing the connected bot's AI features.",
       "title": "How It Works",
-      "description": "The sequence from choosing a top-up amount to accessing AI features.",
+      "description": "The sequence from choosing the fixed package to accessing AI features.",
       "steps": {
-        "choose": { "title": "Choose an amount", "description": "Enter a top-up amount from RUB 200." },
+        "choose": { "title": "Choose a package", "description": "Choose a package of 100 internal credits for RUB 600." },
         "payment": { "title": "Pay through YooKassa", "description": "After online payments are connected, a secure YooKassa payment form opens." },
         "confirmation": { "title": "Wait for confirmation", "description": "The payment service confirms the payment." },
-        "credit": { "title": "Receive the credit", "description": "After confirmation, the amount is automatically credited to the internal balance." },
+        "credit": { "title": "Receive the credit", "description": "After confirmation, exactly 100 internal credits are automatically added to the internal balance." },
         "access": { "title": "Use AI features", "description": "The internal balance is spent when the connected bot's paid AI features are used." }
       },
       "notice": "This flow applies after online payments are connected. Visiting a page after payment is not payment confirmation: the balance is credited only after a successful payment is confirmed."
