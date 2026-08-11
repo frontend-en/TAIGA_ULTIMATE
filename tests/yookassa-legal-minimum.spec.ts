@@ -70,6 +70,9 @@ test.describe('YooKassa legal minimum', () => {
     await expect(page.getByText('Выберите пакет из 100 внутренних кредитов за 600 ₽.')).toBeVisible();
 
     await page.goto('/ru#faq');
+    const paymentFaq = page.getByRole('button', { name: 'Как оплачиваются AI-запросы после запуска?' });
+    await paymentFaq.click();
+    await expect(paymentFaq).toHaveAttribute('aria-expanded', 'true');
     await expect(page.getByText(/Пакет из 100 внутренних кредитов стоит 600 ₽/)).toBeVisible();
     await expect(page.locator('body')).not.toContainText('Минимальное пополнение — 200 ₽');
   });
