@@ -173,19 +173,22 @@
   },
   "pages": {
     "pricing": {
-      "metaTitle": "Top up the Internal Balance",
-      "metaDescription": "Terms for topping up the internal balance to access the connected bot's AI features.",
-      "title": "Top up the Internal Balance",
-      "description": "The internal balance is used solely to pay for access to the connected bot's AI features.",
-      "balanceTitle": "Crediting terms",
-      "balanceDescription": "The User independently selects a top-up amount. The minimum amount is RUB 200.",
+      "metaTitle": "Internal credit package",
+      "metaDescription": "Terms for a fixed package of internal credits used only with an already connected bot.",
+      "title": "Internal credit package",
+      "description": "Internal credits are available only for AI features of an already connected bot.",
+      "packagesLabel": "Available packages",
+      "packageTitle": "{credits} internal credits",
+      "packagePrice": "RUB {price}",
+      "balanceDescription": "This fixed package is used only for AI features of an already connected bot.",
       "facts": {
-        "minimum": "The minimum top-up amount is RUB {amount}.",
-        "rate": "RUB 1 paid = RUB 1 of internal balance.",
-        "confirmation": "The balance is credited only after a successful payment is confirmed."
+        "rate": "RUB {rate} per internal credit",
+        "confirmation": "Credits are added only after server-side confirmation of a successful YooKassa payment.",
+        "restrictions": "Internal credits cannot be withdrawn, exchanged, transferred, or used outside the Service.",
+        "refund": "A refund is possible only for unused internal credits when the Service is unavailable for reasons attributable to the Provider; it is calculated at RUB {rate} per unused internal credit and cannot exceed the original payment."
       },
-      "paymentTitle": "Payment setup",
-      "paymentDescription": "The YooKassa payment form will be available after online payments are connected. Until then, contact support about top-ups. After payment, the balance is credited only after a successful payment is confirmed.",
+      "paymentTitle": "Online checkout is not available yet",
+      "paymentDescription": "Online checkout is not yet available. Contact support to arrange payment. Returning to a page after payment alone is not proof of payment; credits are added only after server-side confirmation of a successful YooKassa payment.",
       "contactCta": "Contact support"
     },
     "howItWorks": {
