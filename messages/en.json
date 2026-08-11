@@ -1,44 +1,79 @@
 {
   "metadata": {
-    "title": "Business Automation & AI Solutions — TAIGA ULTIMATE",
-    "description": "I automate routine tasks and build ready-to-use business systems. AI bots, integrations, websites, CRM — from request to finished solution."
+    "title": "Your Personal AI Bot in Your Messenger",
+    "description": "A personal AI assistant in the messenger selected after a compatibility check, with custom behavior, model selection, and transparent usage costs.",
+    "siteName": "TAIGA_ULTIMATE"
   },
   "nav": {
     "home": "Home",
+    "features": "Features",
     "services": "Services",
-    "process": "Process",
+    "process": "Setup",
     "faq": "FAQ",
-    "contact": "Contact"
+    "contact": "Support",
+    "pricing": "Top up",
+    "howItWorks": "How it works",
+    "pricingCta": "Top-up terms",
+    "orderBot": "Order a bot",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "hero": {
-    "headline": "I automate routine tasks and build working systems for business",
-    "subheadline": "From requests and messages to a complete digital system. AI automation, bots, integrations, websites — all in one place.",
-    "cta": "Submit Request",
-    "ctaSecondary": "Learn More"
+    "eyebrow": "An AI assistant configured for you",
+    "headline": "Your personal AI bot in your messenger",
+    "subheadline": "Get help with questions, writing, and ideas 24/7 — right in the chat you already use. Choose the assistant's personality and AI model; we confirm compatibility with your messenger after your request.",
+    "cta": "Order a bot",
+    "ctaSecondary": "Explore features",
+    "existingUser": "Already connected? Go to balance top-up",
+    "proof": ["Compatibility check", "Personal setup", "Transparent costs"],
+    "visual": {
+      "model": "AI model choice",
+      "private": "Private access",
+      "control": "Cost control",
+      "core": "your AI bot"
+    }
   },
-  "tasks": {
-    "title": "What tasks do people come to me with",
-    "subtitle": "Common situations for businesses:",
+  "botFeatures": {
+    "eyebrow": "What's inside",
+    "title": "Your assistant lives in the chat you already use",
+    "subtitle": "No new product to learn. Open your favorite messenger and talk to AI as naturally as you would talk to a person.",
+    "demo": {
+      "name": "Personal assistant",
+      "status": "online 24/7",
+      "badge": "sample chat",
+      "user": "Help me politely decline a meeting and suggest a call next week.",
+      "bot": "Of course: “Thank you for the invitation! I can't meet this week. Could we schedule a call next Tuesday or Wednesday instead?”",
+      "userFollowup": "Make it a little warmer and shorter.",
+      "typing": "your assistant is preparing another version…",
+      "caption": "A sample scenario — your bot responds to your own real messages."
+    },
     "items": [
-      { "icon": "inbox", "text": "Requests get lost in chats and spreadsheets" },
-      { "icon": "repeat", "text": "Managers do the same manual work every day" },
-      { "icon": "clock", "text": "Responding to clients takes too much time" },
-      { "icon": "users", "text": "Processes depend on specific people" },
-      { "icon": "plug", "text": "Services are not connected to each other" },
-      { "icon": "trending-up", "text": "Business is growing, but there's chaos inside" }
+      { "title": "Questions, writing, and ideas", "description": "Explains difficult topics, helps shape your thoughts, and suggests options without switching apps." },
+      { "title": "Your communication style", "description": "We configure its role, tone, and response rules — from a calm adviser to a concise editor." },
+      { "title": "AI model selection", "description": "We choose a model that balances response quality, speed, and the cost of your requests." },
+      { "title": "Separate access", "description": "Every bot gets its own protected key that can be revoked whenever necessary." },
+      { "title": "Transparent spending", "description": "Requests are charged from an internal balance, so you control top-ups and actual usage." }
     ]
   },
+  "botProcess": {
+    "eyebrow": "From idea to launch",
+    "title": "How your bot goes live",
+    "subtitle": "We handle the technical work. You only need to choose a messenger and explain how you want the assistant to help.",
+    "steps": [
+      { "title": "Describe your assistant", "description": "Leave your contact, choose a messenger, and describe the bot's desired role in your own words." },
+      { "title": "We configure and connect it", "description": "We agree on its communication style and AI model, then build a dedicated connector for your messenger." },
+      { "title": "Use it in your own chat", "description": "Receive a ready bot, top up the internal balance, and message your assistant whenever you need it." }
+    ],
+    "note": "Setup is quoted after a short discussion. Internal-balance top-ups pay only for ongoing AI-feature usage."
+  },
   "services": {
-    "title": "What I do",
-    "subtitle": "I solve clear business tasks: from routine automation to full-scale digital systems.",
+    "eyebrow": "For bigger challenges",
+    "title": "Other AI solutions for business",
+    "subtitle": "A personal bot can be the first step. When the challenge is broader, I build a connected system around your processes.",
     "items": [
       {
         "title": "AI Business Automation",
         "description": "Automation of repetitive processes, request handling, routing, automatic responses."
-      },
-      {
-        "title": "AI Bots & Assistants",
-        "description": "Telegram bots for client communication, team assistants, internal helpers."
       },
       {
         "title": "Service Integration",
@@ -54,100 +89,118 @@
       }
     ]
   },
-  "ai": {
-    "title": "How AI and LLM help businesses — in simple terms",
-    "intro": "AI is not magic and not a replacement for people. It's a tool that removes routine: automates repetitive actions, helps process requests and client communication.",
-    "cases": [
-      "Respond to routine client messages 24/7",
-      "Process and sort requests",
-      "Help managers with responses",
-      "Automate internal instructions and knowledge base",
-      "Speed up sales and support teams",
-      "Save time on repetitive text tasks",
-      "Classify inquiries and route them to the right people",
-      "Prepare product descriptions and cards"
-    ],
-    "cta": "Find out how AI can help your business"
-  },
-  "benefits": {
-    "title": "What this gives your business",
-    "items": [
-      { "value": "−60%", "label": "less manual work" },
-      { "value": "×2", "label": "faster request processing" },
-      { "value": "0", "label": "lost clients" },
-      { "value": "100%", "label": "order in processes" },
-      { "value": "24/7", "label": "automatic responses" },
-      { "value": "×3", "label": "faster scaling" }
-    ]
-  },
   "whyMe": {
-    "title": "Why work with me",
+    "eyebrow": "No technical headache",
+    "title": "From idea to a working bot — handled end to end",
     "items": [
-      { "title": "System approach", "description": "Not just code, but a business task solution. I look at processes holistically." },
-      { "title": "Not templates, but solution for your task", "description": "Every project is individual. I do what you specifically need." },
-      { "title": "Fullstack + AI expertise", "description": "I can build everything: interface, logic, backend, database, integrations, AI." },
-      { "title": "I take the task entirely", "description": "No need to understand technologies. Describe the problem — get a system." },
-      { "title": "Focus on result", "description": "Demo features look nice. Working result — that's what matters." },
-      { "title": "I think like a business", "description": "I understand what's important for business: speed, reliability, simplicity." }
-    ]
-  },
-  "process": {
-    "title": "How the work goes",
-    "subtitle": "Simple and clear process from request to result.",
-    "steps": [
-      { "step": "01", "title": "You submit a request", "description": "Describe your task or problem — in free form" },
-      { "step": "02", "title": "I analyze the task", "description": "I review your processes, find points for automation" },
-      { "step": "03", "title": "I propose a solution", "description": "I show what needs to be done and how it solves your problem" },
-      { "step": "04", "title": "I build the system", "description": "I deliver everything turnkey: from interface to integrations" },
-      { "step": "05", "title": "I deliver the working result", "description": "You test, approve, launch. Support after delivery." }
+      { "title": "We start with your actual need", "description": "No unnecessary features. We identify where a personal bot will genuinely be useful to you." },
+      { "title": "Everything is delivered turnkey", "description": "AI configuration, private access, and the messenger connector become one working system." },
+      { "title": "We stay after launch", "description": "Get help with connection, balance, and questions about your assistant after it goes live." }
     ]
   },
   "faq": {
-    "title": "Frequently Asked Questions",
+    "eyebrow": "No fine print",
+    "title": "What to know before ordering",
+    "subtitle": "The essentials about capabilities, setup, and payment for your personal AI bot.",
     "items": [
       {
-        "question": "Do I need to understand AI?",
-        "answer": "No. I'll explain everything in plain language. Your task is to describe the problem you need solved."
+        "question": "Which messenger can the bot use?",
+        "answer": "We can connect the assistant to Telegram, WhatsApp, VK, or another messenger that provides a technical integration option. We confirm feasibility and timing after your request."
       },
       {
-        "question": "Is this suitable for my business?",
-        "answer": "Automation is useful for any business with repetitive processes: requests, client communication, data processing. If you have routine work — there's something to automate."
+        "question": "What can the basic bot do?",
+        "answer": "It provides AI chat 24/7, answers questions, and helps with writing and ideas. We configure its role and style, select an AI model, and issue separate protected access."
       },
       {
-        "question": "What if I don't know exactly what system I need?",
-        "answer": "That's normal. Many come with a problem, not a solution. I'll figure it out and propose the optimal option."
+        "question": "Does it include memory, voice, and file handling?",
+        "answer": "Those features are not part of the verified base. If you truly need them, we will estimate them as separate extensions and agree on them before development starts."
       },
       {
-        "question": "What access will be needed?",
-        "answer": "Depends on the task. Usually: access to services that need to be integrated. We discuss this during the task analysis."
+        "question": "How much does setup cost?",
+        "answer": "The price depends on the selected messenger and configuration. We clarify the task after your request and quote before work begins; there is no single fixed setup price."
       },
       {
-        "question": "How long does it take?",
-        "answer": "Simple tasks — from 1-2 weeks. Complex systems — from 1-2 months. Exact timing is given after the task analysis."
+        "question": "How are AI requests paid for after launch?",
+        "answer": "The bot uses funds from your internal balance as AI features are used. The minimum top-up is RUB 200 and does not pay for development or setup."
       },
       {
-        "question": "Can we start small?",
-        "answer": "Yes. You can start with one bot or one integration and then expand. I scale as your needs grow."
+        "question": "How is my data handled?",
+        "answer": "Lead data and prompts are processed only as needed to contact you and operate the service. Full details are available in the personal data processing policy."
       }
     ]
   },
-  "cta": {
-    "title": "Ready to automate routine?",
-    "subtitle": "Describe your task — let's figure it out together.",
-    "form": {
-      "name": "Your name",
-      "contact": "Telegram, email or phone",
-      "message": "Tell us what you need help with",
-      "submit": "Submit Request",
-      "success": "Request sent! I'll contact you within 1-2 days.",
-      "error": "Something went wrong. Please try again."
+  "lead": {
+    "eyebrow": "Start with a short brief",
+    "title": "Tell us what your bot should be like",
+    "subtitle": "Describe the idea in your own words. We will clarify the details, check your messenger, and propose a practical launch without unnecessary features.",
+    "privacyNote": "Your request is sent directly by email and is not stored in the website database.",
+    "directLabel": "Or email us directly:",
+    "fields": {
+      "name": { "label": "Your name", "placeholder": "How should we address you?" },
+      "contact": { "label": "How can we reach you?", "placeholder": "Email, phone, or @username" },
+      "messenger": { "label": "Messenger", "other": "Another messenger" },
+      "purpose": { "label": "What should your bot be like?", "placeholder": "For example: help with writing, respond calmly and concisely, and live in Telegram…" }
     },
-    "or": "or write directly:",
-    "telegram": "Telegram",
-    "whatsapp": "WhatsApp"
+    "consent": { "prefix": "I agree to the", "link": "personal data processing policy" },
+    "submit": "Send request",
+    "sending": "Sending…",
+    "success": {
+      "title": "Request sent",
+      "description": "Thank you! We will review your idea and contact you using the details provided.",
+      "again": "Send another request"
+    },
+    "error": {
+      "title": "We couldn't send your request",
+      "description": "Please try again or send your description directly by email.",
+      "email": "Email us directly"
+    },
+    "rateLimited": "Too many attempts. Please wait a few minutes and try again."
+  },
+  "cta": {
+    "close": "Close"
   },
   "footer": {
     "copyright": "All rights reserved.",
-    "tagline": "Business Automation & AI Solutions."
+    "tagline": "Your personal AI bot in the messenger you already use.",
+    "pricing": "Top up",
+    "howItWorks": "How it works",
+    "offer": "Offer",
+    "refunds": "Refunds",
+    "privacy": "Privacy",
+    "requisites": "Business details",
+    "email": "Support email",
+    "phone": "Support phone"
+  },
+  "pages": {
+    "pricing": {
+      "metaTitle": "Top up the Internal Balance",
+      "metaDescription": "Terms for topping up the internal balance to access Telegram bot AI features.",
+      "title": "Top up the Internal Balance",
+      "description": "The internal balance is used solely to pay for access to Telegram bot AI features.",
+      "balanceTitle": "Crediting terms",
+      "balanceDescription": "The User independently selects a top-up amount. The minimum amount is RUB 200.",
+      "facts": {
+        "minimum": "The minimum top-up amount is RUB {amount}.",
+        "rate": "RUB 1 paid = RUB 1 of internal balance.",
+        "confirmation": "The balance is credited only after a successful payment is confirmed."
+      },
+      "paymentTitle": "Payment setup",
+      "paymentDescription": "The YooKassa payment form will be available after online payments are connected. Until then, contact support about top-ups. After payment, the balance is credited only after a successful payment is confirmed.",
+      "contactCta": "Contact support"
+    },
+    "howItWorks": {
+      "metaTitle": "How Top-Ups Work",
+      "metaDescription": "The procedure for topping up the internal balance and accessing Telegram bot AI features.",
+      "title": "How It Works",
+      "description": "The sequence from choosing a top-up amount to accessing AI features.",
+      "steps": {
+        "choose": { "title": "Choose an amount", "description": "Enter a top-up amount from RUB 200." },
+        "payment": { "title": "Pay through YooKassa", "description": "After online payments are connected, a secure YooKassa payment form opens." },
+        "confirmation": { "title": "Wait for confirmation", "description": "The payment service confirms the payment." },
+        "credit": { "title": "Receive the credit", "description": "After confirmation, the amount is automatically credited to the internal balance." },
+        "access": { "title": "Use AI features", "description": "The internal balance is spent when paid Telegram bot AI features are used." }
+      },
+      "notice": "This flow applies after online payments are connected. Visiting a page after payment is not payment confirmation: the balance is credited only after a successful payment is confirmed."
+    }
   }
 }

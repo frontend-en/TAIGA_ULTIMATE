@@ -1,68 +1,36 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { Accordion } from '@/components/ui/Accordion';
 
-const faqItems = [
-  {
-    question: 'Нужно ли мне понимать AI?',
-    answer: 'Нет. Я объясню всё на понятном языке. Ваша задача — описать проблему, которую нужно решить.',
-  },
-  {
-    question: 'Подойдёт ли это моему бизнесу?',
-    answer: 'Автоматизация полезна для любого бизнеса, где есть повторяющиеся процессы: заявки, общение с клиентами, обработка данных. Если у вас есть рутина — значит, есть что автоматизировать.',
-  },
-  {
-    question: 'Что если я не знаю, какая именно система мне нужна?',
-    answer: 'Это нормально. Многие приходят с проблемой, а не с решением. Я разберусь и предложу оптимальный вариант.',
-  },
-  {
-    question: 'Какие доступы потребуются?',
-    answer: 'Зависит от задачи. Обычно: доступы к сервисам, которые нужно интегрировать. Обсуждаем на этапе разбора задачи.',
-  },
-  {
-    question: 'Сколько это занимает по времени?',
-    answer: 'Простые задачи — от 1-2 недель. Сложные системы — от 1-2 месяцев. Точные сроки называю после разбора задачи.',
-  },
-  {
-    question: 'Можно ли начать с малого?',
-    answer: 'Да. Можно начать с одного бота или одной интеграции и затем расширять. Масштабируюся по мере роста ваших потребностей.',
-  },
-] as const;
-
-const faqData = {
-  title: 'Частые вопросы',
-} as const;
-
-interface FAQBlockProps {
-  locale: string;
-}
-
-export function FAQBlock({ locale }: FAQBlockProps) {
+export function FAQBlock() {
+  const t = useTranslations('faq');
   const prefersReducedMotion = useReducedMotion();
+  const items = t.raw('items') as Array<{ question: string; answer: string }>;
 
   return (
-    <section id="faq" className="py-20 md:py-28 px-4">
-      <div className="container mx-auto max-w-3xl">
+    <section id="faq" className="scroll-mt-24 px-4 py-20 sm:px-6 md:py-28">
+      <div className="container mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
         <motion.div
-          className="text-center mb-16"
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -18 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.5 }}
         >
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-            {faqData.title}
-          </h2>
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-primary">{t('eyebrow')}</p>
+          <h2 className="font-display text-3xl font-bold tracking-[-0.03em] sm:text-4xl md:text-5xl">{t('title')}</h2>
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">{t('subtitle')}</p>
         </motion.div>
 
         <motion.div
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+          className="rounded-3xl border bg-card px-5 sm:px-7"
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: prefersReducedMotion ? 0 : 0.1 }}
         >
-          <Accordion items={[...faqItems] as Array<{ question: string; answer: string }>} />
+          <Accordion items={items} />
         </motion.div>
       </div>
     </section>

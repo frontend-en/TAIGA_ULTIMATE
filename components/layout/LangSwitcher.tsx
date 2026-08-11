@@ -1,8 +1,6 @@
 'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { useLocale } from 'next-intl';
-import { Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface LangSwitcherProps {
@@ -10,8 +8,8 @@ interface LangSwitcherProps {
 }
 
 const locales = [
-  { code: 'ru', label: 'RU' },
-  { code: 'en', label: 'EN' },
+  { code: 'ru', label: 'RU', accessibleLabel: 'Русский' },
+  { code: 'en', label: 'EN', accessibleLabel: 'English' },
 ];
 
 export function LangSwitcher({ locale }: LangSwitcherProps) {
@@ -28,6 +26,7 @@ export function LangSwitcher({ locale }: LangSwitcherProps) {
     <div className="flex items-center gap-1 border rounded-md p-1">
       {locales.map((loc) => (
         <button
+          type="button"
           key={loc.code}
           onClick={() => switchLocale(loc.code)}
           className={cn(
@@ -36,7 +35,8 @@ export function LangSwitcher({ locale }: LangSwitcherProps) {
               ? 'bg-primary text-primary-foreground'
               : 'text-muted-foreground hover:text-foreground'
           )}
-          aria-label={`Switch to ${loc.label}`}
+          aria-label={loc.accessibleLabel}
+          aria-pressed={locale === loc.code}
         >
           {loc.label}
         </button>

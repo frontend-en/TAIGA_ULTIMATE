@@ -10,10 +10,25 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: [
+      '.agents/**',
+      '.claude/**',
+      '.codex/**',
+      '.next/**',
+      '.omc/**',
+      '.tmp/**',
+      'coverage/**',
+      'next-env.d.ts',
+      'node_modules/**',
+      'playwright-report/**',
+      'test-results/**',
+    ],
+  },
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
     rules: {
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'react/no-unescaped-entities': 'off',
     },
   },

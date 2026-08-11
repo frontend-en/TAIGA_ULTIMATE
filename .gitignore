@@ -64,6 +64,8 @@ manual_test.js
 
 # Playwright
 .playwright-mcp/
+test-results/
+playwright-report/
 
 # MCP configs
 mcp/

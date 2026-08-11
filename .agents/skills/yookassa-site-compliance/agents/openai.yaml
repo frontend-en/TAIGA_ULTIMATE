@@ -1,0 +1,4 @@
+interface:
+  display_name: "YooKassa Frontend Compliance"
+  short_description: "Build a YooKassa-ready App Router frontend"
+  default_prompt: "Use $yookassa-site-compliance to build the YooKassa-ready frontend."

@@ -1,5 +1,12 @@
 # TAIGA ULTIMATE — Design System
+
+> **Current accent policy:** `mint` and `cta` are compatibility aliases of the single teal `primary` accent, not independent mint or orange palettes. Use `primary`, `primary-hover`, `primary-subtle`, and `primary-border` for new UI.
+
 ## Дизайн-система для AI-бизнес-продуктов
+
+> Актуальная реализация лендинга использует `Button`, `Input`, `Textarea` и
+> семантический `Accordion`. Примеры `Card` и старой `CTASection` ниже сохранены
+> только как визуальный справочник и не описывают существующие файлы или API.
 
 > **Вдохновение:** ChadNext, Vercel, Linear  
 > **Философия:** «Технологичный минимализм» — чистые линии, много воздуха, акцентные mint-цвета, контрастные CTA
@@ -306,30 +313,21 @@ export { Button, buttonVariants };
 | Variant | Назначение | Пример |
 |---------|------------|--------|
 | `default` | Основные действия | Submit, Save |
-| `mint` | Брендовые акценты | Hero CTA |
 | `cta` | Warm CTA кнопки | "Начать", "Заказать" |
-| `destructive` | Опасные действия | Удаление |
 | `outline` | Вторичные действия | Отмена, Назад |
-| `secondary` | Фоновые кнопки | Навигация |
-| `ghost` | Текстовые кнопки | Иконки без фона |
-| `link` | Link-style | "Узнать больше" |
 
 **Размеры:**
 
 | Size | Применение |
 |------|------------|
-| `sm` |Compact actions |
 | `default` | Standard buttons |
 | `lg` | Primary actions |
-| `xl` | Hero section CTA (крупнее, заметнее) |
-| `icon` | Icon-only buttons |
-| `link` | Text links |
 
 ---
 
-### 3.2 Card
+### 3.2 Card (архивный визуальный паттерн)
 
-**Файл:** `components/ui/Card.tsx`  
+**Статус:** отдельный компонент удалён; карточки собираются семантической разметкой и Tailwind-классами.
 **Паттерн:** Compound components + CVA variants
 
 ```tsx
@@ -1031,9 +1029,9 @@ export function FAQSection() {
 
 ---
 
-### 4.5 CTA Section (Contact)
+### 4.5 CTA Section (архивный пример, заменён `LeadFormSection`)
 
-**Файл:** `components/landing/CTASection.tsx`
+**Статус:** заменён актуальным `components/landing/LeadFormSection.tsx`.
 
 ```tsx
 'use client';
@@ -1379,7 +1377,6 @@ TAIGA_ULTIMATE/
 ├── components/
 │   ├── ui/                      # UI примитивы
 │   │   ├── Button.tsx           # ✅ Готово
-│   │   ├── Card.tsx             # ✅ Готово
 │   │   ├── Input.tsx            # ✅ Готово
 │   │   ├── Textarea.tsx         # ✅ Готово
 │   │   ├── Accordion.tsx         # ✅ Готово
@@ -1399,7 +1396,7 @@ TAIGA_ULTIMATE/
 │   │   ├── ServicesBlock.tsx    # 📋 Запланировано
 │   │   ├── PricingSection.tsx    # 📋 Запланировано
 │   │   ├── FAQSection.tsx       # 📋 Запланировано
-│   │   ├── CTASection.tsx       # 📋 Запланировано
+│   │   ├── LeadFormSection.tsx  # ✅ Готово
 │   │   └── WhyMeBlock.tsx       # 📋 Запланировано
 │   │
 │   └── providers/
@@ -1425,7 +1422,6 @@ TAIGA_ULTIMATE/
 ```
 Приоритет 1:
 ├── Button.tsx          ✅ Завершено
-├── Card.tsx           ✅ Завершено
 ├── Input.tsx          ✅ Завершено
 ├── Textarea.tsx       ✅ Завершено
 ├── Accordion.tsx      ✅ Завершено
@@ -1453,7 +1449,7 @@ TAIGA_ULTIMATE/
 ├── FAQSection.tsx          📋 Сверстать
 │
 Неделя 7-8:
-├── CTASection.tsx          📋 Сверстать
+├── LeadFormSection.tsx     ✅ Завершено
 ├── Footer.tsx              📋 Сверстать
 └── Header.tsx              📋 Сверстать
 ```

@@ -4,93 +4,110 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 84% 4.9%;
+    --background: 210 33% 98%;
+    --foreground: 215 39% 13%;
     --card: 0 0% 100%;
-    --card-foreground: 222 84% 4.9%;
+    --card-foreground: 215 39% 13%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 4.9%;
-    --primary: 160 84% 39%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 160 84% 39%;
-    --radius: 0.5rem;
-
-    /* Mint palette */
-    --mint: 160 84% 39%;
-    --mint-hover: 160 84% 32%;
-    --mint-foreground: 210 40% 98%;
-
-    /* CTA accent (warm orange) */
-    --cta: 25 95% 53%;
-    --cta-foreground: 210 40% 98%;
-
-    /* Chart colors */
-    --chart-1: 160 84% 39%;
-    --chart-2: 220 70% 50%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --popover-foreground: 215 39% 13%;
+    --primary: 174 78% 29%;
+    --primary-hover: 174 78% 24%;
+    --primary-foreground: 0 0% 100%;
+    --primary-subtle: 174 46% 94%;
+    --primary-border: 174 37% 74%;
+    --secondary: 174 28% 94%;
+    --secondary-foreground: 177 45% 16%;
+    --muted: 210 25% 95%;
+    --muted-foreground: 215 16% 39%;
+    --accent: 174 28% 94%;
+    --accent-foreground: 177 45% 16%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 24% 88%;
+    --input: 214 24% 84%;
+    --ring: 174 78% 29%;
+    --radius: 0.625rem;
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-
-    /* Glow effects */
-    --glow-mint: 0 0 20px -5px rgb(16 185 129 / 0.4);
-    --glow-cta: 0 0 20px -5px rgb(249 115 22 / 0.4);
+    --shadow-sm: 0 1px 2px hsl(215 39% 13% / 0.05);
+    --shadow-md: 0 4px 12px hsl(215 39% 13% / 0.08), 0 1px 3px hsl(215 39% 13% / 0.06);
+    --shadow-lg: 0 14px 30px hsl(215 39% 13% / 0.1), 0 4px 10px hsl(215 39% 13% / 0.06);
+    --shadow-xl: 0 24px 48px hsl(215 39% 13% / 0.14), 0 8px 18px hsl(215 39% 13% / 0.08);
+    --shadow-card: 0 1px 2px hsl(215 39% 13% / 0.04), 0 8px 24px hsl(215 39% 13% / 0.05);
+    --shadow-primary-glow: 0 12px 28px hsl(var(--primary) / 0.18);
   }
 
   .dark {
-    --background: 222 47% 4%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 6%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 4%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 160 84% 45%;
-    --primary-foreground: 222 47% 4%;
-    --secondary: 217 33% 12%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 12%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 12%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 160 84% 45%;
-
-    /* Mint palette dark */
-    --mint: 160 76% 50%;
-    --mint-hover: 160 76% 55%;
-    --mint-foreground: 222 47% 4%;
-
-    /* Chart dark */
-    --chart-1: 160 84% 45%;
-    --chart-2: 220 70% 50%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --background: 215 33% 8%;
+    --foreground: 210 29% 96%;
+    --card: 215 28% 11%;
+    --card-foreground: 210 29% 96%;
+    --popover: 215 30% 10%;
+    --popover-foreground: 210 29% 96%;
+    --primary: 171 64% 46%;
+    --primary-hover: 171 64% 52%;
+    --primary-foreground: 215 33% 8%;
+    --primary-subtle: 172 41% 15%;
+    --primary-border: 171 35% 32%;
+    --secondary: 215 22% 16%;
+    --secondary-foreground: 210 29% 96%;
+    --muted: 215 22% 16%;
+    --muted-foreground: 213 18% 70%;
+    --accent: 172 26% 16%;
+    --accent-foreground: 210 29% 96%;
+    --destructive: 0 65% 54%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 19% 21%;
+    --input: 215 19% 25%;
+    --ring: 171 64% 46%;
 
     /* Shadows dark */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.2);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+    --shadow-sm: 0 1px 2px hsl(215 33% 3% / 0.32);
+    --shadow-md: 0 5px 14px hsl(215 33% 3% / 0.4), 0 1px 3px hsl(215 33% 3% / 0.24);
+    --shadow-lg: 0 16px 32px hsl(215 33% 3% / 0.45), 0 4px 10px hsl(215 33% 3% / 0.28);
+    --shadow-xl: 0 28px 52px hsl(215 33% 3% / 0.52), 0 8px 18px hsl(215 33% 3% / 0.34);
+    --shadow-card: 0 2px 4px hsl(215 33% 3% / 0.24), 0 10px 28px hsl(215 33% 3% / 0.28);
+    --shadow-primary-glow: 0 14px 32px hsl(var(--primary) / 0.2);
+  }
+}
+
+@keyframes messenger-wallpaper-drift {
+  0%,
+  100% {
+    transform: translate3d(-0.8%, -0.5%, 0) rotate(-0.35deg) scale(1.015);
+  }
+  50% {
+    transform: translate3d(0.8%, 0.65%, 0) rotate(0.35deg) scale(1.03);
+  }
+}
+
+.messenger-wallpaper__field {
+  opacity: 0.105;
+  animation: messenger-wallpaper-drift 34s ease-in-out infinite;
+}
+
+.dark .messenger-wallpaper__field {
+  opacity: 0.13;
+}
+
+@media (max-width: 767px) {
+  .messenger-wallpaper__field {
+    animation-duration: 42s;
+  }
+
+  .messenger-wallpaper__distorted {
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .messenger-wallpaper__field {
+    animation: none;
+    transform: none;
+  }
+
+  .messenger-wallpaper__distorted {
+    filter: none;
   }
 }
 
@@ -106,36 +123,3 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
-
-/* Scroll reveal utility */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Accordion animations */
-@keyframes collapse-down {
-  from { height: 0; opacity: 0; }
-  to { height: var(--radix-accordion-content-height); opacity: 1; }
-}
-@keyframes collapse-up {
-  from { height: var(--radix-accordion-content-height); opacity: 1; }
-  to { height: 0; opacity: 0; }
-}
-.animate-collapse-down { animation: collapse-down 0.2s ease-out; }
-.animate-collapse-up { animation: collapse-up 0.2s ease-in; }
-
-/* Gradient pulse */
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.05); }
-}
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
-}
-.delay-1000 { animation-delay: 1s; }

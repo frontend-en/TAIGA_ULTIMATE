@@ -38,7 +38,7 @@ theme: light/dark (next-themes)
 - Tailwind CSS + class-variance-authority + clsx + tailwind-merge
 - next-themes (light/dark/system)
 - next-intl (i18n: ru/en)
-- zod + react-hook-form (forms)
+- zod + native React form state (forms)
 - framer-motion (animations)
 - lucide-react (icons)
 </tech_stack>
@@ -50,7 +50,7 @@ TAIGA_ULTIMATE/
 │       ├── layout.tsx      # root layout with ThemeProvider + next-intl
 │       └── page.tsx        # landing page
 ├── components/
-│   ├── ui/                 # Button, Input, Card, Accordion, Textarea
+│   ├── ui/                 # Button, Input, Accordion, Textarea
 │   ├── layout/             # Header, Footer, ThemeSwitcher, LangSwitcher
 │   ├── landing/            # HeroSection, ServicesBlock, FAQ, CTA, etc.
 │   └── providers/          # ThemeProvider (next-themes wrapper)
