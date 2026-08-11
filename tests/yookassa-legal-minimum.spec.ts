@@ -4,6 +4,9 @@ test.describe('YooKassa legal minimum', () => {
   test('publishes one fixed Russian package without obsolete top-up terms', async ({ page }) => {
     await page.goto('/ru/pricing');
 
+    const russianPackages = page.getByRole('list', { name: 'Доступные пакеты' });
+    await expect(russianPackages).toBeVisible();
+    await expect(russianPackages.getByRole('listitem')).toHaveCount(1);
     await expect(page.getByRole('heading', { level: 1, name: 'Пакет внутренних кредитов' })).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: '100 внутренних кредитов' })).toHaveCount(1);
     await expect(page.getByText('600 ₽', { exact: true })).toHaveCount(1);
@@ -18,6 +21,9 @@ test.describe('YooKassa legal minimum', () => {
   test('keeps the English legal package equivalent to the Russian package', async ({ page }) => {
     await page.goto('/en/pricing');
 
+    const englishPackages = page.getByRole('list', { name: 'Available packages' });
+    await expect(englishPackages).toBeVisible();
+    await expect(englishPackages.getByRole('listitem')).toHaveCount(1);
     await expect(page.getByRole('heading', { level: 1, name: 'Internal credit package' })).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: '100 internal credits' })).toHaveCount(1);
     await expect(page.getByText('RUB 600', { exact: true })).toHaveCount(1);
