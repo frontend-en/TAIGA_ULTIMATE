@@ -1,4 +1,4 @@
-# Early-Stage Investor Leads — TAIGA ULTIMATE Outreach
+# Early-Stage Investor Leads — SigmaBots Outreach
 
 Generated: 2026-04-26
 Target criteria: AI/Tech platforms, Creator economy, Social/Communication, Marketplaces, Digital ecosystems

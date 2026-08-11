@@ -25,7 +25,7 @@ Direct writes OK for: `~/.Codex/**`, `.omc/**`, `.Codex/**`, `AGENTS.md`, `AGENT
 </model_routing>
 
 <project>
-name: TAIGA_ULTIMATE
+name: SigmaBots
 type: Next.js 15 landing page (app router)
 domain: Автоматизация бизнеса и AI-решения
 languages: RU/EN (next-intl)

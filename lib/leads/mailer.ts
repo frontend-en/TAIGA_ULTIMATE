@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 
+import { siteName } from '../site/business';
 import type { Lead } from './validation';
 
 export interface LeadMailTransport {
@@ -65,7 +66,7 @@ export async function deliverLead(
   await transport.sendMail({
     from: getRequiredEnvironment('SMTP_FROM'),
     to: getRequiredEnvironment('LEAD_RECIPIENT'),
-    subject: 'Новая заявка с сайта TAIGA',
+    subject: `Новая заявка с сайта ${siteName}`,
     text: [
       `Имя: ${lead.name}`,
       `Контакт: ${lead.contact}`,

@@ -199,7 +199,7 @@ describe('POST /api/leads', () => {
       );
       const siteResponse = await post(
         leadRequest(validLead, '203.0.113.10', {
-          origin: 'https://botguardthebest.ru',
+          origin: 'https://sigmabots.ru',
         }),
       );
 

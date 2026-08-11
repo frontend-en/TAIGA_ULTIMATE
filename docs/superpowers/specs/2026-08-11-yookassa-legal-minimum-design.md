@@ -49,9 +49,9 @@ Approved seller data remain unchanged:
 - ИП Ревякина Кристина Степановна
 - INN 230608772037
 - OGRNIP 308236115500021
-- `https://botguardthebest.ru`
+- `https://sigmabots.ru`
 - `kristinarwebdev@gmail.com`
-- `+7 989 210-64-59`
+- `+7 938 483-18-63`
 
 ## Payment boundary
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { business } from '@/lib/site/business';
+import { business, siteName } from '@/lib/site/business';
 
 interface FooterProps {
   locale: string;
@@ -16,7 +16,7 @@ export function Footer({ locale }: FooterProps) {
           <div className="text-center md:text-left">
             <p className="text-sm text-muted-foreground">{t('tagline')}</p>
             <p className="text-xs text-muted-foreground mt-1">
-              &copy; {new Date().getFullYear()} TAIGA_ULTIMATE. {t('copyright')}
+              &copy; {new Date().getFullYear()} {siteName}. {t('copyright')}
             </p>
           </div>
           <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
@@ -33,7 +33,9 @@ export function Footer({ locale }: FooterProps) {
               </Link>
             ))}
             <a href={`mailto:${business.email}`} className="text-muted-foreground transition-colors hover:text-foreground">{t('email')}</a>
-            <a href={business.phoneHref} className="text-muted-foreground transition-colors hover:text-foreground">{t('phone')}</a>
+            <a href={business.phoneHref} className="text-muted-foreground transition-colors hover:text-foreground" target="_blank" rel="noopener noreferrer">
+              {business.phone}
+            </a>
           </div>
         </div>
       </div>

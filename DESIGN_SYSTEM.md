@@ -1,4 +1,4 @@
-# TAIGA ULTIMATE — Design System
+# SigmaBots — Design System
 
 > **Current accent policy:** `mint` and `cta` are compatibility aliases of the single teal `primary` accent, not independent mint or orange palettes. Use `primary`, `primary-hover`, `primary-subtle`, and `primary-border` for new UI.
 
@@ -29,7 +29,7 @@
 
 ## 1. Концепция и видение
 
-**Maverick Digital Agency** — технологическая компания, предоставляющая AI-решения для автоматизации бизнеса.
+**SigmaBots** — технологическая компания, предоставляющая AI-решения для автоматизации бизнеса.
 
 ### Визуальный язык
 
@@ -1139,7 +1139,7 @@ export function Footer() {
     <footer className="py-8 px-6 border-t border-border">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-sm text-muted-foreground">
-          © 2024 Maverick Digital Agency. All rights reserved.
+          © 2024 SigmaBots. All rights reserved.
         </p>
         <nav className="flex items-center gap-6">
           <a href="#hero" className="text-sm hover:text-foreground transition-colors">

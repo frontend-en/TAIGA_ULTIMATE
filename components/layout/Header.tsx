@@ -30,7 +30,7 @@ export function Header({ locale }: HeaderProps) {
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link href={`/${locale}`} className="mr-4 font-display text-base font-bold tracking-tight md:text-xl">
-          TAIGA<span className="text-primary">_</span>ULTIMATE
+          Sigma<span className="text-primary">Bots</span>
         </Link>
 
         {/* Desktop nav */}
