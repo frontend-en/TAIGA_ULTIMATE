@@ -44,14 +44,14 @@ export default async function PricingPage({ params }: PageProps) {
                     <p className="mt-3 leading-7 text-muted-foreground">{t('balanceDescription')}</p>
                   </div>
                 </div>
-                <div className="mt-7 space-y-4">
+                <ul className="mt-7 space-y-4">
                   {facts.map((fact) => (
-                    <div key={fact} className="flex gap-3 leading-6 text-muted-foreground">
+                    <li key={fact} className="flex gap-3 leading-6 text-muted-foreground">
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                       <span>{fact}</span>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </li>
           </ul>

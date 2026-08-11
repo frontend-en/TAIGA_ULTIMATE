@@ -184,7 +184,7 @@
       "facts": {
         "rate": "RUB {rate} per internal credit",
         "confirmation": "Credits are added only after server-side confirmation of a successful YooKassa payment.",
-        "restrictions": "Internal credits cannot be withdrawn, exchanged, transferred, or used outside the Service.",
+        "restrictions": "Internal credits are not money, are not electronic money, are not a bank account or balance, are not a deposit, are not an investment, and are not a payment instrument. They cannot be withdrawn, exchanged, transferred, or used outside the Service.",
         "refund": "A refund is possible only for unused internal credits when the Service is unavailable for reasons attributable to the Provider; it is calculated at RUB {rate} per unused internal credit and cannot exceed the original payment."
       },
       "paymentTitle": "Online checkout is not available yet",
