@@ -13,6 +13,7 @@ const eslintConfig = [
   {
     ignores: [
       '.agents/**',
+      '.beget-artifact/**',
       '.claude/**',
       '.codex/**',
       '.next/**',

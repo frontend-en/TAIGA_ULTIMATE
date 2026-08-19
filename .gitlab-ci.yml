@@ -1,0 +1,65 @@
+image: node:20-bookworm-slim
+
+stages:
+  - verify
+  - build
+  - deploy
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  BEGET_HEALTHCHECK_URL: "https://sigmabots.ru/api/health"
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
+.npm-job:
+  before_script:
+    - npm ci --prefer-offline
+
+verify:
+  extends: .npm-job
+  stage: verify
+  script:
+    - npm run lint
+    - npm run type-check
+    - npm run test
+
+build:standalone:
+  extends: .npm-job
+  stage: build
+  needs:
+    - verify
+  script:
+    - NEXT_PUBLIC_DEPLOYMENT_SHA="$CI_COMMIT_SHA" npm run build
+    - mkdir -p .beget-artifact/.next
+    - cp -a .next/standalone/. .beget-artifact/
+    - cp -a .next/static .beget-artifact/.next/static
+    - if [ -d public ]; then cp -a public .beget-artifact/public; fi
+    - rm -f .beget-artifact/.env .beget-artifact/.env.*
+    - test -f .beget-artifact/server.js
+    - test -z "$(find .beget-artifact -maxdepth 1 -type f -name '.env*' -print -quit)"
+  artifacts:
+    name: "beget-standalone-$CI_COMMIT_SHORT_SHA"
+    expire_in: 1 day
+    paths:
+      - .beget-artifact/
+
+deploy:production:
+  image: alpine:3.21
+  stage: deploy
+  needs:
+    - job: build:standalone
+      artifacts: true
+  before_script:
+    - apk add --no-cache bash curl openssh-client rsync
+  script:
+    - bash deploy/beget/deploy.sh .beget-artifact
+  environment:
+    name: production
+  resource_group: beget-production
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

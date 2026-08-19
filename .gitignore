@@ -7,6 +7,7 @@ out
 
 # Production
 build
+.beget-artifact
 
 # Debug
 npm-debug.log*
@@ -49,6 +50,7 @@ coverage
 CODE_RULES.md
 IMPLEMENTATION_PLAN.md
 README.md
+!deploy/beget/README.md
 SigmaBots_code_prompt_and_initiation.md
 prompt_business_ui_design_system_landing.md
 prompt_landing_claude_ai_services.md
