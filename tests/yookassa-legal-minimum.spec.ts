@@ -1,6 +1,11 @@
 import { expect, test } from 'playwright/test';
+import { trackLeadAssets, waitForLeadHydration } from './helpers/lead-form';
 
 test.describe('YooKassa legal minimum', () => {
+  test.beforeEach(({ page }) => {
+    trackLeadAssets(page);
+  });
+
   test('publishes one fixed Russian package without obsolete top-up terms', async ({ page }) => {
     await page.goto('/ru/pricing');
 
@@ -41,7 +46,7 @@ test.describe('YooKassa legal minimum', () => {
   test('publishes the approved offer in both locales', async ({ page }) => {
     await page.goto('/ru/offer');
     await expect(page.getByText('100 внутренних кредитов за 600 ₽')).toBeVisible();
-    await expect(page.getByText(/11 августа 2026/)).toBeVisible();
+    await expect(page.getByText(/26 октября 2026/)).toBeVisible();
     await expect(page.getByText(/не передаются.*не выводятся.*не обмениваются.*не используются вне Сервиса/i)).toBeVisible();
     await expect(page.getByText(/Внутренние кредиты не являются деньгами/i)).toBeVisible();
     await expect(page.getByText(/не являются инвестицией/i)).toBeVisible();
@@ -77,7 +82,8 @@ test.describe('YooKassa legal minimum', () => {
     await page.goto('/ru/how-it-works');
     await expect(page.getByText('Выберите пакет из 100 внутренних кредитов за 600 ₽.')).toBeVisible();
 
-    await page.goto('/ru#faq');
+    await page.goto('/ru#faq', { waitUntil: 'domcontentloaded' });
+    await waitForLeadHydration(page);
     const paymentFaq = page.getByRole('button', { name: 'Как оплачиваются AI-запросы после запуска?' });
     await paymentFaq.click();
     await expect(paymentFaq).toHaveAttribute('aria-expanded', 'true');
@@ -87,7 +93,8 @@ test.describe('YooKassa legal minimum', () => {
     await page.goto('/en/how-it-works');
     await expect(page.getByText('Choose a package of 100 internal credits for RUB 600.')).toBeVisible();
 
-    await page.goto('/en#faq');
+    await page.goto('/en#faq', { waitUntil: 'domcontentloaded' });
+    await waitForLeadHydration(page);
     const englishPaymentFaq = page.getByRole('button', { name: 'How are AI requests paid for after launch?' });
     await englishPaymentFaq.click();
     await expect(englishPaymentFaq).toHaveAttribute('aria-expanded', 'true');

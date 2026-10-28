@@ -57,8 +57,26 @@ SMTP_USER=mailer@example.com
 SMTP_PASS=replace-with-a-real-secret
 SMTP_FROM=SigmaBots <mailer@example.com>
 LEAD_RECIPIENT=recipient@example.com
+# Optional per-IP limits: enable only if the ingress securely overwrites X-Real-IP.
 LEAD_TRUST_PROXY=false
+LEAD_REVIEW_RECIPIENT=review@example.com
+TYPESAFE_API_KEY=replace-with-typesafe-secret
+LEAD_AI_MODEL=jev-1.14.0
+LEAD_AI_MODE=enforce
 ```
+
+The form uses process-local counters and submission claims. No additional
+database or anti-bot account is required. The HMAC secret is generated securely
+inside each Node.js process; no manual secret is required. Counters and duplicate
+history reset on restart and are not shared between Passenger processes.
+
+Leave `LEAD_TRUST_PROXY=false` unless the ingress is verified to overwrite
+`X-Real-IP` and prevent direct bypass. With no trusted IP, process-wide request
+and AI limits still apply; visitors are not put into a shared per-IP bucket.
+Verify outbound HTTPS to TypeSafe and delivery to both normal/review mailboxes.
+Use `LEAD_AI_MODE=enforce` to reject high-confidence spam and checker manipulation.
+Use `observe` explicitly when calibrating a new model/rubric, and review proposed
+rejections before re-enabling enforcement. See [lead security setup and rollout](../../docs/lead-form-security.md).
 
 The deploy script preserves `.env`, `.env.*`, and `tmp/`. Rsync uses delayed
 updates, and the dynamic health check is the final deployment gate. The build

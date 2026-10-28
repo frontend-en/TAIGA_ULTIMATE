@@ -1,10 +1,13 @@
 import { z } from 'zod';
 
+// Check before trimming: leading/trailing CRLF must not disappear before validation.
+const singleLine = () => z.string().regex(/^[^\p{Cc}\u2028\u2029]*$/u).trim();
+
 const leadSchema = z.object({
-  name: z.string().trim().min(2).max(80),
-  contact: z.string().trim().min(3).max(120),
-  messenger: z.enum(['max', 'vk', 'other']),
-  botPurpose: z.string().trim().min(10).max(1000),
+  name: singleLine().min(2).max(80),
+  contact: singleLine().min(3).max(120),
+  messenger: singleLine().min(1).max(120),
+  botPurpose: z.string().regex(/^(?:[^\p{Cc}]|\t|\n|\r\n)*$/u).trim().min(10).max(1000),
   consent: z.literal(true),
   website: z.literal('').optional(),
 });
@@ -12,6 +15,10 @@ const leadSchema = z.object({
 export type Lead = z.infer<typeof leadSchema>;
 
 export function parseLead(value: unknown) {
+  return leadSchema.safeParse(value);
+}
+
+export function parseLeadSubmission(value: unknown) {
   return leadSchema.safeParse(value);
 }
 

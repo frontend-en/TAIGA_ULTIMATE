@@ -17,6 +17,8 @@ const eslintConfig = [
       '.claude/**',
       '.codex/**',
       '.next/**',
+      '.next-e2e/**',
+      '.next-cache-backup-*/**',
       '.omc/**',
       '.tmp/**',
       'coverage/**',

@@ -1,254 +1,336 @@
+import { createHmac, randomUUID } from 'node:crypto';
+import { isIP } from 'node:net';
 import { NextResponse } from 'next/server';
 
-import {
-  createSmtpLeadTransport,
-  deliverLead,
-  type LeadMailTransport,
-} from './mailer';
-import { isHoneypotSubmission, parseLead } from './validation';
 import { siteOrigin } from '../site/business';
+import { admitLeadRequest, type LeadRequestAdmission } from './admission';
+import { classifyLead, LEAD_RUBRIC_VERSION } from './classifier';
+import { createSmtpLeadTransport, deliverLead, type LeadMailTransport } from './mailer';
+import { readLeadSecurityConfig } from './security-config';
+import { createLeadSecurityStore } from './security-store';
+import type { LeadClassification, LeadClassifier, LeadSecurityConfig, LeadSecurityStore } from './security-types';
+import { isHoneypotSubmission, parseLeadSubmission, type Lead } from './validation';
 
-interface RateLimitConfig {
-  maxRequests: number;
-  windowMs: number;
-  maxTrackedIps?: number;
-}
+type LogValue = string | number | undefined;
+export type LeadLogger = (event: Record<string, LogValue>) => void;
 
-interface LeadPostHandlerDependencies {
+export interface LeadPostHandlerDependencies {
+  admitRequest?: LeadRequestAdmission;
   createTransport?: () => LeadMailTransport;
-  rateLimit?: RateLimitConfig;
+  getConfig?: () => LeadSecurityConfig;
+  createStore?: (config: LeadSecurityConfig) => LeadSecurityStore;
+  classify?: LeadClassifier;
+  logger?: LeadLogger;
   now?: () => number;
-  trustProxy?: boolean;
   deliveryTimeoutMs?: number;
   requestBodyTimeoutMs?: number;
+  requestTimeoutMs?: number;
 }
-
-const defaultRateLimit: RateLimitConfig = {
-  maxRequests: 5,
-  windowMs: 60_000,
-  maxTrackedIps: 10_000,
-};
 
 const maxRequestBodyBytes = 16 * 1024;
-const defaultDeliveryTimeoutMs = 20_000;
-const defaultRequestBodyTimeoutMs = 5_000;
+const fields = ['name', 'contact', 'messenger', 'botPurpose', 'consent'] as const;
 
-function getClientIp(request: Request, trustProxy: boolean) {
-  if (!trustProxy) {
-    return 'unknown';
-  }
-
-  return request.headers.get('x-real-ip')?.trim().slice(0, 128) || 'unknown';
+function response(status: number, code: string, retryAfterSeconds?: number) {
+  return NextResponse.json({ ok: false, code }, {
+    status,
+    headers: retryAfterSeconds === undefined ? undefined : {
+      'Retry-After': String(Math.max(1, Math.ceil(retryAfterSeconds))),
+    },
+  });
 }
 
-function validationErrorResponse() {
-  return NextResponse.json(
-    { ok: false, code: 'VALIDATION_ERROR' },
-    { status: 400 },
-  );
+function successResponse() {
+  return NextResponse.json({ ok: true });
 }
 
 function acceptsRequest(request: Request) {
-  const contentType = request.headers
-    .get('content-type')
-    ?.split(';', 1)[0]
-    .trim()
-    .toLowerCase();
-
-  if (contentType !== 'application/json') {
-    return false;
-  }
-
+  if (request.headers.get('sec-fetch-site')?.trim().toLowerCase() === 'cross-site') return false;
+  const contentType = request.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase();
+  if (contentType !== 'application/json') return false;
   const origin = request.headers.get('origin');
-
-  if (!origin) {
-    return true;
-  }
-
+  if (!origin) return true;
   try {
-    const requestOrigin = new URL(request.url).origin;
     const submittedOrigin = new URL(origin).origin;
-
-    return (
-      submittedOrigin === siteOrigin ||
-      (process.env.NODE_ENV !== 'production' && submittedOrigin === requestOrigin)
-    );
+    return submittedOrigin === siteOrigin ||
+      (process.env.NODE_ENV !== 'production' && submittedOrigin === new URL(request.url).origin);
   } catch {
     return false;
   }
 }
 
-function rateLimitedResponse(retryAfterSeconds: number) {
-  return NextResponse.json(
-    { ok: false, code: 'RATE_LIMITED' },
-    {
-      status: 429,
-      headers: { 'Retry-After': String(retryAfterSeconds) },
-    },
-  );
-}
-
-async function readJsonBody(
-  request: Request,
-  timeoutMs: number,
-): Promise<unknown | undefined> {
+async function readJsonBody(request: Request, timeoutMs: number, signal: AbortSignal): Promise<unknown> {
   const contentLength = Number(request.headers.get('content-length'));
-
-  if (Number.isFinite(contentLength) && contentLength > maxRequestBodyBytes) {
-    return undefined;
+  if ((Number.isFinite(contentLength) && contentLength > maxRequestBodyBytes) || !request.body) {
+    throw new Error('Invalid request body');
   }
-
-  if (!request.body) {
-    return undefined;
-  }
-
   const reader = request.body.getReader();
   const chunks: Uint8Array[] = [];
   let totalBytes = 0;
-  const timeout = setTimeout(() => {
+  let expired = false;
+  const cancel = () => {
+    expired = true;
     void reader.cancel().catch(() => undefined);
-  }, timeoutMs);
-
+  };
+  const timer = setTimeout(cancel, timeoutMs);
+  signal.addEventListener('abort', cancel, { once: true });
   try {
+    signal.throwIfAborted();
     while (true) {
       const { done, value } = await reader.read();
-
-      if (done) {
-        break;
-      }
-
+      if (expired || signal.aborted) throw new Error('Request body timed out');
+      if (done) break;
       totalBytes += value.byteLength;
-
       if (totalBytes > maxRequestBodyBytes) {
-        await reader.cancel();
-        return undefined;
+        cancel();
+        throw new Error('Request body too large');
       }
-
       chunks.push(value);
     }
-
-    const body = new Uint8Array(totalBytes);
+    const bytes = new Uint8Array(totalBytes);
     let offset = 0;
-
     for (const chunk of chunks) {
-      body.set(chunk, offset);
+      bytes.set(chunk, offset);
       offset += chunk.byteLength;
     }
-
-    return JSON.parse(new TextDecoder().decode(body));
-  } catch {
-    return undefined;
+    return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes));
   } finally {
-    clearTimeout(timeout);
+    clearTimeout(timer);
+    signal.removeEventListener('abort', cancel);
+    reader.releaseLock();
   }
+}
+
+function hash(secret: string, namespace: string, value: string) {
+  return createHmac('sha256', secret).update(`${namespace}\0${value}`).digest('hex');
+}
+
+function fingerprint(lead: Lead, secret: string) {
+  return hash(secret, 'submission', JSON.stringify({
+    name: lead.name,
+    contact: lead.contact,
+    messenger: lead.messenger,
+    botPurpose: lead.botPurpose,
+    consent: lead.consent,
+  }));
 }
 
 async function deliverWithTimeout(
   transport: LeadMailTransport,
-  lead: Parameters<typeof deliverLead>[1],
+  lead: Lead,
+  review: Parameters<typeof deliverLead>[2],
   timeoutMs: number,
+  signal: AbortSignal,
 ) {
-  let timeout: ReturnType<typeof setTimeout> | undefined;
-
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  let abort: (() => void) | undefined;
+  const stopTransport = () => {
+    try { transport.close?.(); } catch { /* Preserve the sanitized delivery result. */ }
+  };
   try {
+    signal.throwIfAborted();
     await Promise.race([
-      deliverLead(transport, lead),
+      deliverLead(transport, lead, review),
       new Promise<never>((_, reject) => {
-        timeout = setTimeout(
-          () => {
-            try {
-              transport.close?.();
-            } catch {
-              // The sanitized timeout response remains the source of truth.
-            }
-
-            reject(new Error('Lead delivery timed out'));
-          },
-          timeoutMs,
-        );
+        const stop = () => {
+          stopTransport();
+          reject(new Error('SMTP outcome unconfirmed'));
+        };
+        abort = stop;
+        timer = setTimeout(stop, timeoutMs);
+        signal.addEventListener('abort', stop, { once: true });
+        if (signal.aborted) stop();
       }),
     ]);
   } finally {
-    if (timeout) {
-      clearTimeout(timeout);
-    }
+    if (timer) clearTimeout(timer);
+    if (abort) signal.removeEventListener('abort', abort);
   }
 }
 
 export function createLeadPostHandler({
+  admitRequest = admitLeadRequest,
   createTransport = createSmtpLeadTransport,
-  rateLimit = defaultRateLimit,
+  getConfig = readLeadSecurityConfig,
+  createStore = createLeadSecurityStore,
+  classify = classifyLead,
+  logger = (event) => console.info(JSON.stringify(event)),
   now = Date.now,
-  trustProxy = process.env.LEAD_TRUST_PROXY === 'true',
-  deliveryTimeoutMs = defaultDeliveryTimeoutMs,
-  requestBodyTimeoutMs = defaultRequestBodyTimeoutMs,
+  deliveryTimeoutMs = 20_000,
+  requestBodyTimeoutMs = 5_000,
+  requestTimeoutMs = 40_000,
 }: LeadPostHandlerDependencies = {}) {
-  const requestsByIp = new Map<string, number[]>();
-  const maxTrackedIps =
-    rateLimit.maxTrackedIps ?? defaultRateLimit.maxTrackedIps ?? 10_000;
-
   return async function POST(request: Request) {
-    if (!acceptsRequest(request)) {
-      return validationErrorResponse();
-    }
-
-    const timestamp = now();
-    const clientIp = getClientIp(request, trustProxy);
-    const requests = (requestsByIp.get(clientIp) ?? []).filter(
-      (createdAt) => timestamp - createdAt < rateLimit.windowMs,
-    );
-
-    if (!requestsByIp.has(clientIp) && requestsByIp.size >= maxTrackedIps) {
-      const oldestIp = requestsByIp.keys().next().value;
-
-      if (oldestIp) {
-        requestsByIp.delete(oldestIp);
+    const startedAt = now();
+    const controller = new AbortController();
+    const { signal } = controller;
+    const timer = setTimeout(() => controller.abort(), requestTimeoutMs);
+    const abortFromRequest = () => controller.abort();
+    request.signal.addEventListener('abort', abortFromRequest, { once: true });
+    if (request.signal.aborted) controller.abort();
+    const metadata: Record<string, LogValue> = {
+      event: 'lead_submission', requestId: randomUUID(), reason: 'UNEXPECTED_ERROR', status: 503,
+    };
+    let delivered = false;
+    let releaseAdmission: (() => void) | undefined;
+    let store: LeadSecurityStore | undefined;
+    let claim: { fingerprint: string; owner: string } | undefined;
+    const log = (event: Record<string, LogValue>) => {
+      try { logger(event); } catch { /* Logging must not affect delivery. */ }
+    };
+    const finish = (status: number, code: string, retryAfter?: number) => {
+      metadata.status = status;
+      metadata.reason = code;
+      return response(status, code, retryAfter);
+    };
+    const run = async () => {
+      const admission = admitRequest(now());
+      if (!admission.allowed) {
+        void request.body?.cancel().catch(() => undefined);
+        return finish(429, 'RATE_LIMITED', admission.retryAfterSeconds);
       }
-    }
+      releaseAdmission = admission.release;
+      if (!acceptsRequest(request)) return finish(400, 'VALIDATION_ERROR');
+      let body: unknown;
+      try {
+        body = await readJsonBody(request, requestBodyTimeoutMs, signal);
+      } catch {
+        return finish(400, 'VALIDATION_ERROR');
+      }
+      if (isHoneypotSubmission(body)) {
+        metadata.status = 200;
+        metadata.reason = 'HONEYPOT';
+        return successResponse();
+      }
+      const parsed = parseLeadSubmission(body);
+      if (!parsed.success) {
+        metadata.status = 400;
+        metadata.reason = 'VALIDATION_ERROR';
+        const fieldErrors: Partial<Record<(typeof fields)[number], string>> = {};
+        for (const issue of parsed.error.issues) {
+          const field = issue.path[0];
+          if (fields.includes(field as (typeof fields)[number])) {
+            fieldErrors[field as (typeof fields)[number]] = issue.code === 'too_big' ? 'tooLong' : 'invalid';
+          }
+        }
+        return NextResponse.json({ ok: false, code: 'VALIDATION_ERROR', fieldErrors }, { status: 400 });
+      }
+      signal.throwIfAborted();
+      let config: LeadSecurityConfig;
+      try {
+        config = getConfig();
+      } catch {
+        metadata.reason = 'CONFIGURATION_ERROR';
+        return response(503, 'SERVICE_UNAVAILABLE');
+      }
+      metadata.model = config.model;
+      metadata.rubricVersion = LEAD_RUBRIC_VERSION;
+      const forwardedIp = request.headers.get('x-real-ip')?.trim();
+      const clientIp = config.trustProxy && forwardedIp && isIP(forwardedIp) ? forwardedIp : undefined;
+      metadata.limitScope = clientIp ? 'ip-and-global' : 'global';
+      store = createStore(config);
+      const rate = await store.checkRateLimit(clientIp ? hash(config.hmacSecret, 'ip', clientIp) : undefined, now(), signal);
+      signal.throwIfAborted();
+      if (!rate.allowed) return finish(429, 'RATE_LIMITED', rate.retryAfterSeconds);
 
-    requestsByIp.delete(clientIp);
-    requestsByIp.set(clientIp, requests);
+      const lead: Lead = {
+        name: parsed.data.name,
+        contact: parsed.data.contact,
+        messenger: parsed.data.messenger,
+        botPurpose: parsed.data.botPurpose,
+        consent: parsed.data.consent,
+      };
+      const key = fingerprint(lead, config.hmacSecret);
+      const owner = randomUUID();
+      const acquired = await store.acquireSubmission(key, owner, signal);
+      signal.throwIfAborted();
+      if (acquired.status === 'complete') {
+        metadata.status = 200;
+        metadata.reason = 'DUPLICATE';
+        return successResponse();
+      }
+      if (acquired.status === 'pending') return finish(409, 'SUBMISSION_IN_PROGRESS', acquired.retryAfterSeconds);
+      claim = { fingerprint: key, owner };
 
-    if (requests.length >= rateLimit.maxRequests) {
-      const retryAfterSeconds = Math.max(
-        1,
-        Math.ceil((requests[0] + rateLimit.windowMs - timestamp) / 1000),
-      );
+      const quota = await store.reserveAiAttempt(now(), signal);
+      signal.throwIfAborted();
+      metadata.aiAttempts = quota.used;
+      metadata.aiLimit = quota.limit;
+      let classification: LeadClassification = {
+        route: 'review', reason: 'AI_QUOTA_EXHAUSTED', model: config.model, rubricVersion: LEAD_RUBRIC_VERSION,
+      };
+      if (quota.allowed) {
+        const classifiedAt = now();
+        try {
+          classification = await classify(lead, config, signal);
+        } catch {
+          classification = { ...classification, reason: 'AI_UNAVAILABLE' };
+        }
+        metadata.aiMs = now() - classifiedAt;
+      }
+      signal.throwIfAborted();
+      metadata.classification = classification.route;
+      metadata.route = classification.route === 'normal' ? 'normal' : 'review';
+      metadata.reason = classification.reason;
+      metadata.spam = classification.spam;
+      metadata.manipulation = classification.manipulation;
+      metadata.mode = config.mode;
+      if (classification.route === 'spam' && config.mode === 'enforce') {
+        metadata.route = 'rejected';
+        metadata.status = 422;
+        return response(422, 'SUBMISSION_REJECTED');
+      }
+      const review = classification.route === 'normal' ? undefined : {
+        recipient: config.reviewRecipient, classification,
+      };
+      signal.throwIfAborted();
+      const sentAt = now();
+      try {
+        await deliverWithTimeout(createTransport(), lead, review, deliveryTimeoutMs, signal);
+      } catch {
+        metadata.smtpMs = now() - sentAt;
+        metadata.reason = 'SMTP_UNCONFIRMED';
+        throw new Error('SMTP outcome unconfirmed');
+      }
+      delivered = true;
+      metadata.smtpMs = now() - sentAt;
+      metadata.status = 200;
+      try {
+        const completed = await store.completeSubmission(key, owner, signal);
+        if (!completed) log({ event: 'lead_completion_unconfirmed', requestId: metadata.requestId, reason: 'LOCK_OWNERSHIP_LOST' });
+      } catch {
+        log({ event: 'lead_completion_unconfirmed', requestId: metadata.requestId, reason: 'STATE_UNAVAILABLE_AFTER_SMTP' });
+      }
+      return successResponse();
+    };
 
-      return rateLimitedResponse(retryAfterSeconds);
-    }
-
-    requests.push(timestamp);
-    requestsByIp.set(clientIp, requests);
-
-    const body = await readJsonBody(request, requestBodyTimeoutMs);
-
-    if (body === undefined) {
-      return validationErrorResponse();
-    }
-
-    if (isHoneypotSubmission(body)) {
-      return NextResponse.json({ ok: true });
-    }
-
-    const parsedLead = parseLead(body);
-
-    if (!parsedLead.success) {
-      return validationErrorResponse();
-    }
-
+    let abortListener: (() => void) | undefined;
     try {
-      await deliverWithTimeout(
-        createTransport(),
-        parsedLead.data,
-        deliveryTimeoutMs,
-      );
-      return NextResponse.json({ ok: true });
+      return await Promise.race([
+        run(),
+        new Promise<never>((_, reject) => {
+          abortListener = () => reject(new Error('Request deadline exceeded'));
+          signal.addEventListener('abort', abortListener, { once: true });
+          if (signal.aborted) abortListener();
+        }),
+      ]);
     } catch {
-      return NextResponse.json(
-        { ok: false, code: 'DELIVERY_ERROR' },
-        { status: 503 },
-      );
+      if (delivered) return successResponse();
+      metadata.status = 503;
+      metadata.reason = signal.aborted ? 'REQUEST_ABORTED' :
+        metadata.reason === 'SMTP_UNCONFIRMED' ? 'SMTP_UNCONFIRMED' : 'SERVICE_UNAVAILABLE';
+      return response(503, 'SERVICE_UNAVAILABLE');
+    } finally {
+      releaseAdmission?.();
+      if (abortListener) signal.removeEventListener('abort', abortListener);
+      request.signal.removeEventListener('abort', abortFromRequest);
+      if (claim && store && !delivered) {
+        try { await store.releaseSubmission(claim.fingerprint, claim.owner, signal); } catch {
+          log({ event: 'lead_release_unconfirmed', requestId: metadata.requestId, reason: 'STATE_UNAVAILABLE' });
+        }
+      }
+      clearTimeout(timer);
+      metadata.durationMs = now() - startedAt;
+      log(metadata);
     }
   };
 }

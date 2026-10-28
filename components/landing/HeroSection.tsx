@@ -1,108 +1,84 @@
 'use client';
 
+import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { ArrowRight, Bot, Check, Cpu, LockKeyhole, WalletCards } from 'lucide-react';
+import { ArrowDown, ArrowRight, Check, Heart, Lightbulb, MessageCircle, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/Button';
 import { MessengerWallpaper } from '@/components/landing/MessengerWallpaper';
+import { FriendMascot } from '@/components/landing/FriendMascot';
+import { cn } from '@/lib/utils';
 
-interface HeroSectionProps {
-  locale: string;
-}
+interface HeroSectionProps { locale: string }
+type Scenario = { label: string; user: string; bot: string };
+const scenarioIcons = [Lightbulb, MessageCircle, Sparkles];
 
 export function HeroSection({ locale }: HeroSectionProps) {
   const t = useTranslations('hero');
   const prefersReducedMotion = useReducedMotion();
+  const [activeScenario, setActiveScenario] = useState(0);
   const proofItems = t.raw('proof') as string[];
+  const scenarios = t.raw('playground.scenarios') as Scenario[];
+  const scenario = scenarios[activeScenario];
 
   return (
-    <section className="relative isolate overflow-hidden border-b px-4 pb-20 pt-16 sm:px-6 sm:pb-24 sm:pt-24 lg:min-h-[calc(100vh-4rem)] lg:py-28">
-      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_12%,hsl(var(--primary)/0.16),transparent_34%),radial-gradient(circle_at_84%_58%,hsl(var(--primary)/0.1),transparent_28%)]" />
+    <section className="friend-hero relative isolate overflow-hidden px-4 pb-10 pt-10 sm:px-6 sm:pt-16 lg:pb-12 lg:pt-20">
       <MessengerWallpaper />
-
-      <div className="container mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.65 }}
-        >
-          <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-primary-border bg-primary-subtle px-3 py-1.5 text-sm font-medium text-primary">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-50 motion-reduce:animate-none" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-            </span>
-            {t('eyebrow')}
-          </div>
-
-          <h1 className="font-display max-w-4xl text-4xl font-bold leading-[1.05] tracking-[-0.04em] sm:text-5xl md:text-6xl lg:text-7xl">
-            {t('headline')}
-          </h1>
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl">
-            {t('subheadline')}
-          </p>
-
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Link href={`/${locale}#lead-form`} className={buttonVariants({ size: 'lg', variant: 'cta' })}>
-              {t('cta')}
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <Link href={`/${locale}#features`} className={buttonVariants({ size: 'lg', variant: 'outline' })}>
-              {t('ctaSecondary')}
-            </Link>
-          </div>
-
-          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
-            {proofItems.map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary">
-                  <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                </span>
-                {item}
-              </li>
-            ))}
-          </ul>
-
-          <Link
-            href={`/${locale}/pricing`}
-            className="mt-8 inline-flex text-sm text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground"
-          >
-            {t('existingUser')}
-          </Link>
-        </motion.div>
-
-        <motion.div
-          className="relative mx-auto w-full max-w-[520px]"
-          initial={{ opacity: 0, scale: 0.96, x: 24 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.75, delay: prefersReducedMotion ? 0 : 0.12 }}
-          aria-hidden="true"
-        >
-          <div className="absolute -inset-8 rounded-full bg-primary/10 blur-3xl" />
-          <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-primary-border bg-card/90 p-5 shadow-2xl shadow-primary/10 backdrop-blur-xl sm:p-8">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.13),transparent_48%)]" />
-            <div className="absolute inset-[16%] rounded-full border border-dashed border-primary/25" />
-            <div className="absolute inset-[29%] rounded-full border border-primary/20" />
-
-            <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border bg-background/80 px-3 py-2 text-xs font-medium shadow-sm sm:left-8 sm:top-8">
-              <Cpu className="h-4 w-4 text-primary" />
-              {t('visual.model')}
+      <div className="container mx-auto max-w-7xl">
+        <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+          <motion.div className="relative z-10 pb-4 lg:pb-12" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}>
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/15 bg-card/80 px-3.5 py-2 text-xs font-bold tracking-wide text-foreground sm:text-sm">
+              <Heart className="h-4 w-4 fill-primary/20 text-primary" aria-hidden="true" />{t('eyebrow')}
             </div>
-            <div className="absolute right-5 top-[28%] flex items-center gap-2 rounded-full border bg-background/80 px-3 py-2 text-xs font-medium shadow-sm sm:right-8">
-              <LockKeyhole className="h-4 w-4 text-primary" />
-              {t('visual.private')}
+            <h1 className="font-display max-w-2xl text-[2.65rem] font-extrabold leading-[1.08] tracking-[-0.045em] sm:text-6xl xl:text-[4.65rem]">
+              {t('headline')}{' '}<span className="friend-headline-accent relative inline-block text-primary">{t('headlineAccent')}</span>
+            </h1>
+            <p className="mt-7 max-w-lg text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">{t('subheadline')}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Link href={`/${locale}#lead-form`} className={buttonVariants({ size: 'lg', variant: 'cta' })}>{t('cta')}<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+              <Link href={`/${locale}#features`} className={buttonVariants({ size: 'lg', variant: 'outline' })}>{t('ctaSecondary')}</Link>
             </div>
-            <div className="absolute bottom-5 left-5 flex items-center gap-2 rounded-full border bg-background/80 px-3 py-2 text-xs font-medium shadow-sm sm:bottom-8 sm:left-8">
-              <WalletCards className="h-4 w-4 text-primary" />
-              {t('visual.control')}
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold text-muted-foreground sm:text-sm">
+              {proofItems.map((item) => <li key={item} className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-primary" aria-hidden="true" />{item}</li>)}
+            </ul>
+            <Link href={`/${locale}/pricing`} className="mt-6 inline-flex text-xs text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground sm:text-sm">{t('existingUser')}</Link>
+          </motion.div>
+          <motion.div className="friend-playground relative mx-auto w-full max-w-[540px] pb-4 pt-4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: prefersReducedMotion ? 0 : 0.7, delay: prefersReducedMotion ? 0 : 0.1 }}>
+            <div className="friend-scene relative h-[280px] sm:h-[320px]" aria-hidden="true">
+              <div className="friend-scene__halo" />
+              <div className="friend-scene__greeting">{t('playground.greeting')}<span className="friend-scene__greeting-tail" /></div>
+              <Sparkles className="absolute left-[9%] top-[48%] h-8 w-8 rotate-12 text-primary/70" strokeWidth={1.5} />
+              <Heart className="absolute right-[13%] top-[12%] h-8 w-8 -rotate-12 fill-primary/15 text-primary/60" strokeWidth={1.5} />
+              <div className="friend-scene__mascot"><FriendMascot /></div>
+              <span className="friend-scene__note">{t('playground.note')}</span>
             </div>
-
-            <div className="absolute left-1/2 top-1/2 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-[2rem] border border-primary/30 bg-primary text-primary-foreground shadow-xl shadow-primary/25 sm:h-36 sm:w-36">
-              <Bot className="h-10 w-10 sm:h-12 sm:w-12" />
-              <span className="mt-2 text-[10px] font-semibold uppercase tracking-[0.22em]">{t('visual.core')}</span>
+            <div className="relative -mt-3 rounded-[1.75rem] border border-foreground/10 bg-card p-4 shadow-xl sm:p-5">
+              <div className="mb-4 flex items-center justify-between gap-3 border-b pb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="friend-mini-avatar" aria-hidden="true"><span /><span /></div>
+                  <div><p className="text-sm font-extrabold">{t('playground.name')}</p><p className="flex items-center gap-1.5 text-[11px] text-muted-foreground"><span className="h-1.5 w-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400" />{t('playground.status')}</p></div>
+                </div>
+                <span className="rounded-full bg-muted px-2 py-1 text-[10px] font-bold text-muted-foreground">{t('playground.demo')}</span>
+              </div>
+              <div aria-live="polite" aria-atomic="true" className="min-h-[144px] space-y-3 sm:min-h-[130px]">
+                <p className="ml-auto max-w-[90%] rounded-2xl rounded-br-sm bg-secondary px-3.5 py-2.5 text-sm leading-6 text-secondary-foreground">{scenario.user}</p>
+                <p className="mr-auto max-w-[94%] rounded-2xl rounded-bl-sm bg-primary-subtle px-3.5 py-2.5 text-sm leading-6">{scenario.bot}</p>
+              </div>
+              <p className="mb-2 mt-4 text-[11px] font-bold text-muted-foreground">{t('playground.try')}</p>
+              <div className="flex flex-wrap gap-2" role="group" aria-label={t('playground.try')}>
+                {scenarios.map((item, index) => {
+                  const Icon = scenarioIcons[index] ?? Sparkles;
+                  return <button key={item.label} type="button" aria-pressed={activeScenario === index} onClick={() => setActiveScenario(index)} className={cn('inline-flex min-h-10 items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2', activeScenario === index ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-background hover:border-primary/40 hover:bg-primary-subtle')}><Icon className="h-3.5 w-3.5" aria-hidden="true" />{item.label}</button>;
+                })}
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-foreground/10 pt-6 text-xs font-semibold text-muted-foreground lg:mt-6">
+          <span className="inline-flex items-center gap-2"><MessageCircle className="h-4 w-4 text-primary" aria-hidden="true" />{t('messengerNote')}</span>
+          <Link href={`/${locale}#features`} className="inline-flex items-center gap-2 transition-colors hover:text-primary">{t('scrollHint')}<ArrowDown className="h-3.5 w-3.5" aria-hidden="true" /></Link>
+        </div>
       </div>
     </section>
   );

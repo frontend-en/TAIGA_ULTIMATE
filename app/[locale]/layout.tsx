@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from 'next';
-import { Roboto } from 'next/font/google';
+import { Nunito } from 'next/font/google';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { getMessages, getTranslations } from 'next-intl/server';
 import '@/app/globals.css';
 import { business, isSiteLocale, localUrl, siteOrigin } from '@/lib/site/business';
 
-const roboto = Roboto({
+const nunito = Nunito({
   subsets: ['latin', 'cyrillic'],
   variable: '--font-sans',
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
 });
 
@@ -17,8 +17,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+    { media: '(prefers-color-scheme: light)', color: '#fff9ef' },
+    { media: '(prefers-color-scheme: dark)', color: '#241e1a' },
   ],
 };
 
@@ -87,7 +87,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${roboto.variable} font-sans antialiased`}>
+      <body className={`${nunito.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem locale={locale} messages={messages}>
           {children}
         </ThemeProvider>

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
-import { Send } from 'lucide-react';
+import { MessageCircleHeart } from 'lucide-react';
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
@@ -17,10 +17,26 @@ export function StickyCTA({ locale }: StickyCTAProps) {
   const [visible, setVisible] = useState(false);
   const [closed, setClosed] = useState(false);
   const [leadFormVisible, setLeadFormVisible] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 2000);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const hero = document.querySelector('.friend-hero');
+    if (!hero) {
+      setHeroVisible(false);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -41,15 +57,15 @@ export function StickyCTA({ locale }: StickyCTAProps) {
     <div
       className={cn(
         'fixed bottom-4 right-4 z-50 transition-all duration-300 motion-reduce:transition-none sm:bottom-6 sm:right-6',
-        visible && !leadFormVisible
+        visible && !heroVisible && !leadFormVisible
           ? 'translate-y-0 opacity-100'
           : 'pointer-events-none translate-y-16 opacity-0',
-        leadFormVisible && 'invisible',
+        (heroVisible || leadFormVisible) && 'invisible',
       )}
     >
       <div className="relative">
         <Link href={`/${locale}#lead-form`} className={buttonVariants({ variant: 'cta', size: 'lg', className: 'rounded-full px-6 shadow-lg' })}>
-          <Send className="h-4 w-4" aria-hidden="true" />
+          <MessageCircleHeart className="h-5 w-5" aria-hidden="true" />
           {navT('orderBot')}
         </Link>
         <button

@@ -1069,13 +1069,8 @@ export function CTASection() {
               <h3 className="font-semibold">Или напишите напрямую:</h3>
               <div className="flex gap-4">
                 <Button variant="outline" asChild>
-                  <a href="https://max.ru/username" target="_blank" rel="noopener">
-                    MAX
-                  </a>
-                </Button>
-                <Button variant="outline" asChild>
-                  <a href="https://vk.com/username" target="_blank" rel="noopener">
-                    VK
+                  <a href="https://messenger.example.com/username" target="_blank" rel="noopener">
+                    Написать в мессенджере
                   </a>
                 </Button>
               </div>

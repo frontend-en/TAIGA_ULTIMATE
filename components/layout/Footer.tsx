@@ -10,11 +10,12 @@ export function Footer({ locale }: FooterProps) {
   const t = useTranslations('footer');
 
   return (
-    <footer className="border-t bg-card">
-      <div className="container mx-auto px-4 md:px-6 py-8">
+    <footer className="border-t border-foreground/10 bg-muted/40">
+      <div className="container mx-auto max-w-7xl px-4 py-10 md:px-6 md:py-14">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row">
-          <div className="text-center md:text-left">
-            <p className="text-sm text-muted-foreground">{t('tagline')}</p>
+          <div>
+            <Link href={`/${locale}`} className="mb-4 inline-flex items-center gap-2.5 font-display text-xl font-black tracking-tight"><span className="friend-mini-avatar" aria-hidden="true"><span /><span /></span><span>Sigma<span className="text-primary">Bots</span></span></Link>
+            <p className="max-w-64 text-sm leading-6 text-muted-foreground">{t('tagline')}</p>
             <p className="text-xs text-muted-foreground mt-1">
               &copy; {new Date().getFullYear()} {siteName}. {t('copyright')}
             </p>

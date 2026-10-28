@@ -6,7 +6,7 @@
   },
   "nav": {
     "home": "Home",
-    "features": "Features",
+    "features": "Meet your friend",
     "services": "Services",
     "process": "Setup",
     "faq": "FAQ",
@@ -14,18 +14,34 @@
     "pricing": "Top up",
     "howItWorks": "How it works",
     "pricingCta": "Top-up terms",
-    "orderBot": "Order a bot",
+    "orderBot": "I'd like a friend",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },
   "hero": {
-    "eyebrow": "An AI assistant configured for you",
-    "headline": "Your personal AI bot in your messenger",
-    "subheadline": "Get help with questions, writing, and ideas 24/7 — right in the chat you already use. Choose the assistant's personality and AI model; we confirm compatibility with your messenger after your request.",
-    "cta": "Order a bot",
-    "ctaSecondary": "Explore features",
+    "eyebrow": "A clever assistant. A warmer conversation.",
+    "headline": "Your AI friend.",
+    "headlineAccent": "On your wavelength.",
+    "subheadline": "A fresh idea, a tricky question untangled, just the right words. Your personal AI bot, with a personality you choose, in the messenger you already use.",
+    "cta": "I'd like a friend",
+    "ctaSecondary": "Let's get acquainted",
     "existingUser": "Already connected? Go to balance top-up",
-    "proof": ["Compatibility check", "Personal setup", "Transparent costs"],
+    "proof": ["Your kind of conversation", "Help with ideas", "Transparent costs"],
+    "messengerNote": "The messenger you already use — connection checked after your request",
+    "scrollHint": "Get to know your friend",
+    "playground": {
+      "greeting": "Hello! Shall we meet?",
+      "note": "A personality to match yours!",
+      "name": "Your future AI friend",
+      "status": "ready for your ideas",
+      "demo": "sample conversation",
+      "try": "What shall we talk about? Pick an example:",
+      "scenarios": [
+        { "label": "An idea, please", "user": "What can I give a friend who has everything?", "bot": "How about an experience? Map out a walk through your favorite places together, with a little surprise waiting at the end." },
+        { "label": "Make it simple", "user": "Why don't clouds fall? Keep it simple.", "bot": "They're made of tiny water droplets. Those drops are so light that rising air holds them up, a little like the wind carrying a feather." },
+        { "label": "Help me plan", "user": "I want to read more, but I keep putting it off.", "bot": "Let's start small: ten minutes and one interesting book. Pair it with your evening tea. What kind of stories do you like?" }
+      ]
+    },
     "visual": {
       "model": "AI model choice",
       "private": "Private access",
@@ -34,12 +50,12 @@
     }
   },
   "botFeatures": {
-    "eyebrow": "What's inside",
-    "title": "Your assistant lives in the chat you already use",
-    "subtitle": "No new product to learn. Open your favorite messenger and talk to AI as naturally as you would talk to a person.",
+    "eyebrow": "For big ideas and little everyday things",
+    "title": "It's good to have someone to think with",
+    "subtitle": "A message to draft, a sudden “but why?”, or an idea that needs a nudge. Just write — your AI assistant can help you think it through.",
     "demo": {
-      "name": "Personal assistant",
-      "status": "online 24/7",
+      "name": "Your AI friend",
+      "status": "here to chat 24/7",
       "badge": "sample chat",
       "user": "Help me politely decline a meeting and suggest a call next week.",
       "bot": "Of course: “Thank you for the invitation! I can't meet this week. Could we schedule a call next Tuesday or Wednesday instead?”",
@@ -56,9 +72,9 @@
     ]
   },
   "botProcess": {
-    "eyebrow": "From idea to launch",
-    "title": "How your bot goes live",
-    "subtitle": "We handle the technical work. You only need to choose a messenger and explain how you want the assistant to help.",
+    "eyebrow": "Meet in three little steps",
+    "title": "From “I'd like one” to “hello!”",
+    "subtitle": "You imagine the personality and pick a messenger. We check connection options, agree on the details, and take care of the technical work.",
     "steps": [
       { "title": "Describe your assistant", "description": "Leave your contact, choose a messenger, and describe the bot's desired role in your own words." },
       { "title": "We configure and connect it", "description": "We agree on its communication style and AI model, then build a dedicated connector for your messenger." },
@@ -77,7 +93,7 @@
       },
       {
         "title": "Service Integration",
-        "description": "I combine CRM, MAX, VK, forms, spreadsheets and APIs into one working system."
+        "description": "I combine CRM, messengers, forms, spreadsheets and APIs into one working system."
       },
       {
         "title": "Websites & Web Products",
@@ -90,8 +106,8 @@
     ]
   },
   "whyMe": {
-    "eyebrow": "No technical headache",
-    "title": "From idea to a working bot — handled end to end",
+    "eyebrow": "Real people behind your bot",
+    "title": "We'll help you make friends with technology",
     "items": [
       { "title": "We start with your actual need", "description": "No unnecessary features. We identify where a personal bot will genuinely be useful to you." },
       { "title": "Everything is delivered turnkey", "description": "AI configuration, private access, and the messenger connector become one working system." },
@@ -100,12 +116,12 @@
   },
   "faq": {
     "eyebrow": "No fine print",
-    "title": "What to know before ordering",
-    "subtitle": "The essentials about capabilities, setup, and payment for your personal AI bot.",
+    "title": "A little curious already?",
+    "subtitle": "Get to know your future AI friend: what it can do, where it lives, and how pricing works.",
     "items": [
       {
         "question": "Which messenger can the bot use?",
-        "answer": "We can connect the assistant to MAX or VK. We can consider another platform if it provides a technical integration option. We confirm the platform and timing after your request."
+        "answer": "We can consider connecting the assistant to your chosen messenger if it provides a technical integration option. We confirm connection availability and timing after your request."
       },
       {
         "question": "What can the basic bot do?",
@@ -130,16 +146,27 @@
     ]
   },
   "lead": {
-    "eyebrow": "Start with a short brief",
-    "title": "Tell us what your bot should be like",
-    "subtitle": "Describe the idea in your own words. We will clarify the details, check your messenger, and propose a practical launch without unnecessary features.",
-    "privacyNote": "Your request is sent directly by email and is not stored in the website database.",
+    "eyebrow": "Every friend has a personality",
+    "title": "What will your AI friend be like?",
+    "subtitle": "A calm conversation partner, a source of unexpected ideas, or a helper with a sense of humor? Tell us what feels right, and we'll discuss setup, your messenger, and the connection price.",
+    "privacyNote": "We check your request for spam and send it by email. Its text and contact details are not stored in the website database.",
     "directLabel": "Or email us directly:",
+    "requiredNote": "All fields are required",
+    "groups": { "contact": "Contact details", "bot": "About your bot" },
     "fields": {
       "name": { "label": "Your name", "placeholder": "How should we address you?" },
-      "contact": { "label": "How can we reach you?", "placeholder": "Email, phone, or @username" },
-      "messenger": { "label": "Messenger", "other": "Another messenger" },
-      "purpose": { "label": "What should your bot be like?", "placeholder": "For example: help with writing, respond calmly and concisely, and live in MAX…" }
+      "contact": { "label": "How can we reach you?", "placeholder": "Your contact details", "hint": "Email, phone, or @username" },
+      "messenger": { "label": "Where should your bot work?", "placeholder": "Messenger name", "hint": "You can name more than one. We will check connection options." },
+      "purpose": { "label": "What should your bot be like?", "placeholder": "Describe your idea", "hint": "What tasks should it handle? What personality and communication style should it have?" }
+    },
+    "validation": {
+      "summary": "Check the highlighted fields to finish your request.",
+      "name": "Enter a name with at least 2 characters.",
+      "contact": "Leave contact details with at least 3 characters.",
+      "messenger": "Enter the name of your preferred messenger.",
+      "botPurpose": "Describe your idea in a little more detail — at least 10 characters.",
+      "consent": "Confirm your consent to personal data processing.",
+      "tooLong": "Shorten this text to {limit} characters or fewer."
     },
     "consent": { "prefix": "I agree to the", "link": "personal data processing policy" },
     "submit": "Send request",
@@ -150,18 +177,21 @@
       "again": "Send another request"
     },
     "error": {
-      "title": "We couldn't send your request",
-      "description": "Please try again or send your description directly by email.",
+      "title": "We couldn't confirm your request was sent",
+      "description": "Your request may have been received. Your fields are saved — you can try again or email us directly.",
       "email": "Email us directly"
     },
-    "rateLimited": "Too many attempts. Please wait a few minutes and try again."
+    "rateLimited": "Too many attempts. Please wait until the pause ends and try again.",
+    "retryAfter": "You can submit again in {seconds} seconds.",
+    "pending": "This request is already being processed. Please wait before submitting it again.",
+    "rejected": "Your request did not pass the automatic check. Please review its text or contact us directly."
   },
   "cta": {
     "close": "Close"
   },
   "footer": {
     "copyright": "All rights reserved.",
-    "tagline": "Your personal AI bot in the messenger you already use.",
+    "tagline": "A few more ideas. A little more warmth in your day.",
     "pricing": "Top up",
     "howItWorks": "How it works",
     "offer": "Offer",

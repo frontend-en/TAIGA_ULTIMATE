@@ -9,7 +9,8 @@
     "lint": "eslint . --max-warnings=0",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "node scripts/run-e2e.mjs"
+    "test:e2e": "node scripts/run-e2e.mjs",
+    "test:leads:jev": "cross-env RUN_LEAD_JEV_EVALUATION=1 vitest run tests/integration/leads.jev.test.ts"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

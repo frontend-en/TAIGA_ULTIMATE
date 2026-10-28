@@ -2,9 +2,26 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { ArrowDown, MessageSquareText, Rocket, Settings2 } from 'lucide-react';
+import { ArrowDown, ArrowRight, MessageCircleHeart, PartyPopper, Settings2 } from 'lucide-react';
 
-const icons = [MessageSquareText, Settings2, Rocket];
+const icons = [MessageCircleHeart, Settings2, PartyPopper];
+const cardPalettes = [
+  {
+    surface: 'border-[#a9dabe] bg-[#c3f2d6] text-[#243c31] shadow-[0_6px_0_#a9dabe]',
+    muted: 'text-[#40594c]',
+    icon: 'bg-[#9ddfb7] text-[#243c31]',
+  },
+  {
+    surface: 'border-[#c9b6e9] bg-[#e0d0ff] text-[#42305d] shadow-[0_6px_0_#c9b6e9]',
+    muted: 'text-[#5e497b]',
+    icon: 'bg-[#c4a5f0] text-[#42305d]',
+  },
+  {
+    surface: 'border-[#a2c9e8] bg-[#c0e3ff] text-[#263e5b] shadow-[0_6px_0_#a2c9e8]',
+    muted: 'text-[#405a78]',
+    icon: 'bg-[#98c8ef] text-[#263e5b]',
+  },
+];
 
 export function BotProcessSection() {
   const t = useTranslations('botProcess');
@@ -12,41 +29,42 @@ export function BotProcessSection() {
   const steps = t.raw('steps') as Array<{ title: string; description: string }>;
 
   return (
-    <section id="process" className="scroll-mt-24 border-y bg-muted/35 px-4 py-20 sm:px-6 md:py-28">
+    <section id="process" className="scroll-mt-24 bg-[hsl(var(--friend-butter))] px-4 py-20 text-[hsl(151_15%_19%)] sm:px-6 md:py-24">
       <div className="container mx-auto max-w-7xl">
-        <div className="max-w-3xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-primary">{t('eyebrow')}</p>
-          <h2 className="font-display text-3xl font-bold tracking-[-0.03em] sm:text-4xl md:text-5xl">{t('title')}</h2>
-          <p className="mt-5 text-lg leading-8 text-muted-foreground">{t('subtitle')}</p>
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-4 text-sm font-bold tracking-wide text-[hsl(151_15%_19%)]">{t('eyebrow')}</p>
+          <h2 className="text-balance font-display text-3xl font-bold leading-[1.12] tracking-[-0.03em] text-[hsl(151_15%_19%)] sm:text-4xl md:text-5xl">{t('title')}</h2>
+          <p className="mt-5 text-lg leading-8 text-[hsl(151_12%_27%)]">{t('subtitle')}</p>
         </div>
 
-        <div className="mt-12 grid gap-4 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {steps.map((step, index) => {
-            const Icon = icons[index] ?? Rocket;
+            const Icon = icons[index] ?? PartyPopper;
+            const palette = cardPalettes[index % cardPalettes.length];
             return (
               <motion.article
                 key={step.title}
-                className="relative overflow-hidden rounded-3xl border bg-background p-6 sm:p-8"
+                className={`relative rounded-[2rem] border p-7 sm:p-8 ${palette.surface}`}
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.45, delay: prefersReducedMotion ? 0 : index * 0.08 }}
               >
-                <span className="absolute right-5 top-3 font-display text-6xl font-bold text-primary/5">0{index + 1}</span>
-                <div className="grid h-11 w-11 place-items-center rounded-2xl bg-primary/10 text-primary">
-                  <Icon className="h-5 w-5" aria-hidden="true" />
+                <span className={`absolute right-7 top-7 font-display text-sm font-extrabold tracking-widest ${palette.muted}`}>0{index + 1}</span>
+                <div className={`grid h-14 w-14 rotate-[-6deg] place-items-center rounded-[1.2rem] ${palette.icon}`}>
+                  <Icon className="h-6 w-6 rotate-6" aria-hidden="true" />
                 </div>
-                <h3 className="mt-8 text-xl font-semibold">{step.title}</h3>
-                <p className="mt-3 leading-7 text-muted-foreground">{step.description}</p>
+                <h3 className="mt-7 text-xl font-bold">{step.title}</h3>
+                <p className={`mt-3 leading-7 ${palette.muted}`}>{step.description}</p>
                 {index < steps.length - 1 && (
-                  <ArrowDown className="absolute bottom-5 right-5 h-5 w-5 text-primary/30 lg:hidden" aria-hidden="true" />
+                  <><ArrowDown className="absolute -bottom-5 right-8 z-10 h-5 w-5 text-[hsl(151_15%_19%)] lg:hidden" aria-hidden="true" /><ArrowRight className="absolute -right-6 top-12 z-10 hidden h-6 w-6 text-[hsl(151_15%_19%)] lg:block" aria-hidden="true" /></>
                 )}
               </motion.article>
             );
           })}
         </div>
 
-        <p className="mt-7 max-w-3xl text-sm leading-6 text-muted-foreground">{t('note')}</p>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-[hsl(151_12%_27%)]">{t('note')}</p>
       </div>
     </section>
   );

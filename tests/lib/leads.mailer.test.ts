@@ -64,9 +64,9 @@ describe('createSmtpLeadTransport', () => {
         expect.objectContaining({
           secure,
           requireTLS,
-          connectionTimeout: 10_000,
-          greetingTimeout: 10_000,
-          socketTimeout: 20_000,
+          connectionTimeout: 5_000,
+          greetingTimeout: 5_000,
+          socketTimeout: 10_000,
         }),
       );
     },
