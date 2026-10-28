@@ -150,7 +150,6 @@
     "title": "What will your AI friend be like?",
     "subtitle": "A calm conversation partner, a source of unexpected ideas, or a helper with a sense of humor? Tell us what feels right, and we'll discuss setup, your messenger, and the connection price.",
     "privacyNote": "We check your request for spam and send it by email. Its text and contact details are not stored in the website database.",
-    "directLabel": "Or email us directly:",
     "requiredNote": "All fields are required",
     "groups": { "contact": "Contact details", "bot": "About your bot" },
     "fields": {

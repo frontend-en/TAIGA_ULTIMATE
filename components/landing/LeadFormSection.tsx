@@ -203,15 +203,6 @@ export function LeadFormSection({ locale }: { locale: string }) {
                   <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                   {t('privacyNote')}
                 </p>
-                <p className="flex items-start gap-3">
-                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
-                  <span>
-                    {t('directLabel')}{' '}
-                    <a className="break-all font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href={`mailto:${business.email}`}>
-                      {business.email}
-                    </a>
-                  </span>
-                </p>
               </div>
           </div>
 
